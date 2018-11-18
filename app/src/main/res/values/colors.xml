@@ -10,9 +10,12 @@
     <color name="black">#000000</color>
     <color name="link_blue">#4d94ff</color>
     <color name="darkRed">#cc0000</color>
-    <color name="colordarkRed">#cc0000</color>
 
     <color name="mcam_color_light">#FAFAFA</color>
     <color name="mcam_color_dark">#424242</color>
+
+    <color name="darkviolet">#c06c84</color>
+    <color name="coral">#f67280</color>
+    <color name="pastelorange">#f1e0da</color>
 
 </resources>
