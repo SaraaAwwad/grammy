@@ -4,7 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-
     <color name="grey">#bfbfbf</color>
     <color name="white">#fff</color>
     <color name="black">#000000</color>
@@ -19,3 +18,4 @@
     <color name="pastelorange">#f1e0da</color>
 
 </resources>
+
