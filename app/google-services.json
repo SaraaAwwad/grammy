@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "197416856722",
+    "firebase_url": "https://grammy-468c4.firebaseio.com",
+    "project_id": "grammy-468c4",
+    "storage_bucket": "grammy-468c4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:197416856722:android:9a334e01fabefc24",
+        "android_client_info": {
+          "package_name": "com.example.sara.grammy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "197416856722-33l3iquso6636t5g55rc22vaqo2n0grc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sara.grammy",
+            "certificate_hash": "0defc200b4f64e55ec5308f23cfcf8da103a7577"
+          }
+        },
+        {
+          "client_id": "197416856722-aspo6le9l3r5j2ehblqs1l5sduca5ih2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnlMmuUv7uNkGr9h1Yp5pD3v-UMmyK6CU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "197416856722-aspo6le9l3r5j2ehblqs1l5sduca5ih2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

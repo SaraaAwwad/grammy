@@ -1,0 +1,22 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true">
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/topSearchBar"
+                android:background="@color/white"
+                app:menu="@menu/search_bar">
+
+            </android.support.design.widget.AppBarLayout>
+
+
+
+    </RelativeLayout>
+
+</merge>
