@@ -9,6 +9,7 @@ import com.example.sara.grammy.Share.ShareActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -18,11 +19,13 @@ import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
 import android.view.MenuItem;
 
+
 import java.lang.reflect.Field;
 
 public class BottomNavigationViewHelper {
 
     @SuppressLint("RestrictedApi")
+
     public static void removeShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
         try {
@@ -42,12 +45,12 @@ public class BottomNavigationViewHelper {
         }
     }
 
-    public static void enableNav(final Context context, final Activity callingActivity, BottomNavigationView bottomNavigationView){
+    public static void enableNav(final Context context, final Activity callingActivity, BottomNavigationView bottomNavigationView) {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
 
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
 
                     case R.id.home:
                         //context not this bec its a object class not, so we cant use "this"
@@ -57,7 +60,7 @@ public class BottomNavigationViewHelper {
                         break;
 
                     case R.id.search:
-                        Intent intent2  = new Intent(context, SearchActivity.class);//ACTIVITY_NUM = 1
+                        Intent intent2 = new Intent(context, SearchActivity.class);//ACTIVITY_NUM = 1
                         context.startActivity(intent2);
                         //callingActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                         break;

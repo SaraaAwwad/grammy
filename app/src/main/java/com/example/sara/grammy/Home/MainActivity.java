@@ -15,6 +15,7 @@ import com.example.sara.grammy.R;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG ="MainActivity" ;
+    private static final int ACTIVITY_NUM = 0;
     private Context mContext = MainActivity.this;
 
     @Override
