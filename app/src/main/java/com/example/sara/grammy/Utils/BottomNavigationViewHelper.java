@@ -8,6 +8,7 @@ import com.example.sara.grammy.Search.SearchActivity;
 import com.example.sara.grammy.Share.ShareActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -41,7 +42,7 @@ public class BottomNavigationViewHelper {
         }
     }
 
-    public static void enableNav(final Context context, BottomNavigationView bottomNavigationView){
+    public static void enableNav(final Context context, final Activity callingActivity, BottomNavigationView bottomNavigationView){
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -49,6 +50,7 @@ public class BottomNavigationViewHelper {
                 switch (item.getItemId()){
 
                     case R.id.home:
+                        //context not this bec its a object class not, so we cant use "this"
                         Intent intent1 = new Intent(context, MainActivity.class);//ACTIVITY_NUM = 0
                         context.startActivity(intent1);
                         //callingActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -63,13 +65,13 @@ public class BottomNavigationViewHelper {
                     case R.id.add:
                         Intent intent3 = new Intent(context, ShareActivity.class);//ACTIVITY_NUM = 2
                         context.startActivity(intent3);
-                        //callingActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                        //overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                         break;
 
                     case R.id.likes:
                         Intent intent4 = new Intent(context, LikesActivity.class);//ACTIVITY_NUM = 3
                         context.startActivity(intent4);
-                       //callingActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                        //callingActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                         break;
 
                     case R.id.profile:
