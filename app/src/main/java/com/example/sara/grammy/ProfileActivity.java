@@ -1,7 +1,7 @@
 package com.example.sara.grammy;
 
-
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,14 +10,15 @@ import android.view.MenuItem;
 
 import com.example.sara.grammy.Utils.BottomNavigationViewHelper;
 
-public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
-    private static final int ACTIVITY_NUM = 0;
+public class ProfileActivity extends AppCompatActivity {
+    private static final String TAG = "ProfileActivity";
+    private static final int ACTIVITY_NUM = 4;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Log.d(TAG, "OnCreate: started");
         setupBottomNavigationView();
     }
 
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
         BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
-        BottomNavigationViewHelper.enableNavigation(MainActivity.this, bottomNavigationView);
+        BottomNavigationViewHelper.enableNavigation(ProfileActivity.this, bottomNavigationView);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);

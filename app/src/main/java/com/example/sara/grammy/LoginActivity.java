@@ -1,5 +1,6 @@
 package com.example.sara.grammy;
 
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,7 +33,9 @@ public class LoginActivity extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                setContentView(R.layout.register_layout);
+              //  setContentView(R.layout.register_layout);
+                Intent myIntent = new Intent(v.getContext(), RegisterActivity.class);
+                startActivityForResult(myIntent,0);
             }
         });
     }
