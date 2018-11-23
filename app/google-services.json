@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "197416856722-q1b1qr60he3m61s17l480p87kiqcuj0m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sara.grammy",
+            "certificate_hash": "c632bf43a0c990870df33701d50640425fc54b8d"
+          }
+        },
+        {
           "client_id": "197416856722-aspo6le9l3r5j2ehblqs1l5sduca5ih2.apps.googleusercontent.com",
           "client_type": 3
         }
