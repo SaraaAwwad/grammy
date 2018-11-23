@@ -10,12 +10,12 @@ import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.example.sara.grammy.LikesActivity;
-import com.example.sara.grammy.MainActivity;
-import com.example.sara.grammy.ProfileActivity;
+import com.example.sara.grammy.Likes.LikesActivity;
+import com.example.sara.grammy.Home.MainActivity;
+import com.example.sara.grammy.Profile.ProfileActivity;
 import com.example.sara.grammy.R;
-import com.example.sara.grammy.SearchActivity;
-import com.example.sara.grammy.ShareActivity;
+import com.example.sara.grammy.Search.SearchActivity;
+import com.example.sara.grammy.Share.ShareActivity;
 
 import java.lang.reflect.Field;
 

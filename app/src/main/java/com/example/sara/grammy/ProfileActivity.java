@@ -1,4 +1,4 @@
-package com.example.sara.grammy;
+package com.example.sara.grammy.Profile;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.sara.grammy.R;
 import com.example.sara.grammy.Utils.BottomNavigationViewHelper;
 
 public class ProfileActivity extends AppCompatActivity {
