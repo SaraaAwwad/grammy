@@ -1,6 +1,15 @@
 package com.example.sara.grammy.Utils;
 
+import com.example.sara.grammy.Home.MainActivity;
+import com.example.sara.grammy.Likes.LikesActivity;
+import com.example.sara.grammy.Profile.ProfileActivity;
+import com.example.sara.grammy.R;
+import com.example.sara.grammy.Search.SearchActivity;
+import com.example.sara.grammy.Share.ShareActivity;
+
 import android.annotation.SuppressLint;
+import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -10,16 +19,20 @@ import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
 import android.view.MenuItem;
 
+<<<<<<< HEAD
 import com.example.sara.grammy.Likes.LikesActivity;
 import com.example.sara.grammy.Home.MainActivity;
 import com.example.sara.grammy.Profile.ProfileActivity;
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.Search.SearchActivity;
 import com.example.sara.grammy.Share.ShareActivity;
+=======
+>>>>>>> d63bc5418fe044d59f5cddba8879bfd786b737e4
 
 import java.lang.reflect.Field;
 
 public class BottomNavigationViewHelper {
+
     @SuppressLint("RestrictedApi")
 
     public static void removeShiftMode(BottomNavigationView view) {
@@ -32,7 +45,6 @@ public class BottomNavigationViewHelper {
             for (int i = 0; i < menuView.getChildCount(); i++) {
                 BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
                 item.setShiftingMode(false);
-                // set once again checked value, so view will be updated
                 item.setChecked(item.getItemData().isChecked());
             }
         } catch (NoSuchFieldException e) {
@@ -42,40 +54,47 @@ public class BottomNavigationViewHelper {
         }
     }
 
-    public static void enableNavigation(final Context context, BottomNavigationView view){
-        view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+    public static void enableNav(final Context context, final Activity callingActivity, BottomNavigationView bottomNavigationView) {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch(item.getItemId()){
+            public boolean onNavigationItemSelected(MenuItem item) {
 
-                    case R.id.ic_home:
-                        Intent intent1 = new Intent(context, MainActivity.class);
+                switch (item.getItemId()) {
+
+                    case R.id.home:
+                        //context not this bec its a object class not, so we cant use "this"
+                        Intent intent1 = new Intent(context, MainActivity.class);//ACTIVITY_NUM = 0
                         context.startActivity(intent1);
+                        //callingActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                         break;
-                    case R.id.ic_search:
-                        Intent intent2 = new Intent(context, SearchActivity.class);
+
+                    case R.id.search:
+                        Intent intent2 = new Intent(context, SearchActivity.class);//ACTIVITY_NUM = 1
                         context.startActivity(intent2);
+                        //callingActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                         break;
-                    case R.id.ic_add:
-                        Intent intent3 = new Intent(context, ShareActivity.class);
+
+                    case R.id.add:
+                        Intent intent3 = new Intent(context, ShareActivity.class);//ACTIVITY_NUM = 2
                         context.startActivity(intent3);
+                        //overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                         break;
-                    case R.id.ic_likes:
-                        Intent intent4 = new Intent(context, LikesActivity.class);
+
+                    case R.id.likes:
+                        Intent intent4 = new Intent(context, LikesActivity.class);//ACTIVITY_NUM = 3
                         context.startActivity(intent4);
+                        //callingActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                         break;
-                    case R.id.ic_profile:
-                        Intent intent5 = new Intent(context, ProfileActivity.class);
+
+                    case R.id.profile:
+                        Intent intent5 = new Intent(context, ProfileActivity.class);//ACTIVITY_NUM = 4
                         context.startActivity(intent5);
+                        //callingActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                         break;
-
-
                 }
 
                 return false;
             }
         });
     }
-
-
 }
