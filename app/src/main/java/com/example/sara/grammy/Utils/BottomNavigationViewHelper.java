@@ -1,33 +1,21 @@
 package com.example.sara.grammy.Utils;
 
-import com.example.sara.grammy.Home.MainActivity;
-import com.example.sara.grammy.Likes.LikesActivity;
-import com.example.sara.grammy.Profile.ProfileActivity;
-import com.example.sara.grammy.R;
-import com.example.sara.grammy.Search.SearchActivity;
-import com.example.sara.grammy.Share.ShareActivity;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
-
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
 import android.view.MenuItem;
 
-<<<<<<< HEAD
-import com.example.sara.grammy.Likes.LikesActivity;
 import com.example.sara.grammy.Home.MainActivity;
+import com.example.sara.grammy.Likes.LikesActivity;
 import com.example.sara.grammy.Profile.ProfileActivity;
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.Search.SearchActivity;
 import com.example.sara.grammy.Share.ShareActivity;
-=======
->>>>>>> d63bc5418fe044d59f5cddba8879bfd786b737e4
 
 import java.lang.reflect.Field;
 
