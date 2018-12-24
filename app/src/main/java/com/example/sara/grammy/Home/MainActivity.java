@@ -12,6 +12,9 @@ import android.view.MenuItem;
 
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.Utils.BottomNavigationViewHelper;
+import com.example.sara.grammy.Utils.SectionsPagerAdapter;
+import com.example.sara.grammy.Utils.UniversalImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,10 +26,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initImageLoader();
         setUpBottomNav();
         setupViewPager();
     }
 
+    private void initImageLoader(){
+        UniversalImageLoader universalImageLoader = new UniversalImageLoader(mContext);
+        ImageLoader.getInstance().init(universalImageLoader.getConfig());
+    }
     /**
      * Responsible for adding the 3 tabs: Camera, Home, Messages
      */

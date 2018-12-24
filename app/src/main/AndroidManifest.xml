@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sara.grammy">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -29,6 +31,7 @@
         <activity android:name=".Likes.LikesActivity" />
         <activity android:name=".Profile.ProfileActivity" />
         <activity android:name=".Share.ShareActivity"></activity>
+        <activity android:name=".Profile.AccountSettingsActivity"/>
 
 </application>
 
