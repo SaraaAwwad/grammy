@@ -37,10 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
         //mAuth = FirebaseAuth.getInstance();
         setupFirebaseAuth();
-        
         initImageLoader();
         setUpBottomNav();
         setupViewPager();
+
+        mAuth.signOut();
+
     }
 
     private void initImageLoader(){
