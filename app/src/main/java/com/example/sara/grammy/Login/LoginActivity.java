@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sara.grammy.Home.MainActivity;
 import com.example.sara.grammy.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -188,6 +189,13 @@ public class LoginActivity extends AppCompatActivity {
                             // ...
                         }
                     });
+        }
+
+        //redirect to home, if user's login succeeded
+        if(mAuth.getCurrentUser()!=null){
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 }
