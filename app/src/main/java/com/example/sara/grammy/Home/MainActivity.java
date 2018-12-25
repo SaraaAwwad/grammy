@@ -1,7 +1,9 @@
 package com.example.sara.grammy.Home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -10,10 +12,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.sara.grammy.Login.LoginActivity;
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.Utils.BottomNavigationViewHelper;
 import com.example.sara.grammy.Utils.SectionsPagerAdapter;
 import com.example.sara.grammy.Utils.UniversalImageLoader;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,11 +27,17 @@ public class MainActivity extends AppCompatActivity {
     private static final int ACTIVITY_NUM = 0;
     private Context mContext = MainActivity.this;
 
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //mAuth = FirebaseAuth.getInstance();
+        setupFirebaseAuth();
+        
         initImageLoader();
         setUpBottomNav();
         setupViewPager();
@@ -67,8 +78,58 @@ public class MainActivity extends AppCompatActivity {
         menuItem.setChecked(true);
     }
 
+/* ___________FIREBASE ___________*/
 
 
+
+    private void setupFirebaseAuth(){
+        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
+
+        mAuth = FirebaseAuth.getInstance();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                checkCurrentUser(user);
+
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+            }
+        };
+    }
+
+    private void checkCurrentUser(FirebaseUser user){
+        Log.d(TAG, "checkCurrentUser: checking if user is logged in.");
+
+        if(user == null){
+            Intent intent = new Intent(mContext, LoginActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+        //mViewPager.setCurrentItem(HOME_FRAGMENT);
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        checkCurrentUser(currentUser);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
 
 
 
