@@ -17,6 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sara.grammy.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -48,6 +51,8 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.login_layout);
+
+        setupFirebaseAuth();
 
         mContext = LoginActivity.this;
         mProgressBar = (ProgressBar) findViewById(R.id.loginRequestProgressBar);
@@ -98,17 +103,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void init(View v){
-        String email = mEmail.getText().toString();
-        String password = mPassword.getText().toString();
-
-        if(isNull(email)|| isNull(password)){
-            Toast.makeText(mContext, "You must fill the fields", Toast.LENGTH_SHORT).show();
-        }else{
-            mProgressBar.setVisibility(View.VISIBLE);
-            mPleaseWait.setVisibility(View.VISIBLE);
-        }
-    }
 
 
     /* ___________FIREBASE ___________*/
@@ -139,11 +133,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void checkCurrentUser(FirebaseUser user){
         Log.d(TAG, "checkCurrentUser: checking if user is logged in.");
-
-        if(user == null){
-            Intent intent = new Intent(mContext, LoginActivity.class);
-            startActivity(intent);
-        }
     }
 
     @Override
@@ -163,4 +152,42 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public void init(View view) {
+        String email = mEmail.getText().toString();
+        String password = mPassword.getText().toString();
+
+        if(isNull(email)|| isNull(password)){
+            Toast.makeText(mContext, "You must fill the fields", Toast.LENGTH_SHORT).show();
+        }else{
+            mProgressBar.setVisibility(View.VISIBLE);
+            mPleaseWait.setVisibility(View.VISIBLE);
+
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "signInWithEmail:success");
+                                Toast.makeText(mContext, getString(R.string.auth_success),
+                                        Toast.LENGTH_SHORT).show();
+                                mProgressBar.setVisibility(View.GONE);
+                                mPleaseWait.setVisibility(View.GONE);
+                                //FirebaseUser user = mAuth.getCurrentUser();
+                                //updateUI(user);
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                Toast.makeText(mContext,getString(R.string.auth_failed),
+                                        Toast.LENGTH_SHORT).show();
+                                mProgressBar.setVisibility(View.GONE);
+                                mPleaseWait.setVisibility(View.GONE);
+                                //updateUI(null);
+                            }
+
+                            // ...
+                        }
+                    });
+        }
+    }
 }
