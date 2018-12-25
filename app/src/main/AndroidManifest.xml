@@ -24,10 +24,12 @@
             android:windowSoftInputMode="adjustNothing"
             android:launchMode="singleInstance"> </activity>
 
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity"
-            android:parentActivityName=".LoginActivity">
+        <activity android:name=".Login.LoginActivity" />
+
+        <activity android:name=".Login.RegisterActivity"
+            android:parentActivityName=".Login.LoginActivity">
         </activity>
+
         <activity android:name=".Likes.LikesActivity" />
         <activity android:name=".Profile.ProfileActivity" />
         <activity android:name=".Share.ShareActivity"></activity>

@@ -68,6 +68,7 @@
             android:textColor="#fff"
             android:textColorHint="#fff" />
 
+        <!--
         <EditText
             android:id="@+id/edtPhone"
             android:layout_width="match_parent"
@@ -81,7 +82,7 @@
             android:padding="10dp"
             android:textColor="#fff"
             android:textColorHint="#fff" />
-
+        -->
 
         <Button
             android:id="@+id/btnLogin"

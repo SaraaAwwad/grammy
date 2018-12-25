@@ -1,10 +1,12 @@
-package com.example.sara.grammy;
+package com.example.sara.grammy.Login;
 
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.sara.grammy.R;
 
 public class RegisterActivity extends Activity {
 

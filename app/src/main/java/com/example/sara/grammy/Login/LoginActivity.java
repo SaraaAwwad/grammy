@@ -1,4 +1,4 @@
-package com.example.sara.grammy;
+package com.example.sara.grammy.Login;
 
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.example.sara.grammy.R;
 
 public class LoginActivity extends AppCompatActivity {
 
