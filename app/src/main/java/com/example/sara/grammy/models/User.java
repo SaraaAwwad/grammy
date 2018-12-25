@@ -1,4 +1,4 @@
-package com.example.sara.grammy.Models;
+package com.example.sara.grammy.models;
 
 public class User {
 }

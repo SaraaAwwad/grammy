@@ -2,6 +2,7 @@
     <string name="app_name">Grammy</string>
     <string name="edit_profile_fragment">Edit Profile</string>
     <string name="sign_out_fragment">Sign Out</string>
+    <string name="profile_fragment">Profile</string>
 
     <!-- Firebase Strings -->
     <string name= "auth_failed">Failed to Authenticate</string>
