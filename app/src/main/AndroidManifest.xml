@@ -26,8 +26,7 @@
 
         <activity android:name=".Login.LoginActivity" />
 
-        <activity android:name=".Login.RegisterActivity"
-            android:parentActivityName=".Login.LoginActivity">
+        <activity android:name=".Login.RegisterActivity">
         </activity>
 
         <activity android:name=".Likes.LikesActivity" />

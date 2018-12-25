@@ -74,8 +74,9 @@ public class LoginActivity extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "Navigating to Register from LoginActivity");
                 Intent myIntent = new Intent(v.getContext(), RegisterActivity.class);
-                startActivityForResult(myIntent,0);
+                startActivity(myIntent);
             }
         });
     }

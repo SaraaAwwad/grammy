@@ -37,6 +37,7 @@
             android:alpha="0.7"
             android:background="@drawable/edittext"
             android:hint="Email"
+            android:inputType="textEmailAddress"
             android:padding="10dp"
             android:textColor="#fff"
             android:textColorHint="#fff" />
@@ -85,7 +86,7 @@
         -->
 
         <Button
-            android:id="@+id/btnLogin"
+            android:id="@+id/btnRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -95,5 +96,23 @@
 
 
     </LinearLayout>
+
+    <ProgressBar
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/registerProgressBar"
+        android:layout_centerInParent="true"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please wait..."
+        android:id="@+id/waitRegister"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_alignBottom="@+id/registerProgressBar"
+        android:layout_alignRight="@+id/registerProgressBar"
+        android:layout_alignLeft="@+id/registerProgressBar"/>
+
 
 </RelativeLayout>
