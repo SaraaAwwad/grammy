@@ -102,6 +102,10 @@ public class RegisterActivity extends Activity {
             Toast.makeText(mContext, "All fields must be filled out.", Toast.LENGTH_SHORT).show();
             return false;
         }
+        if(password.length()<=6){
+            Toast.makeText(mContext, "Weak Password, must be 6 or more in length", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         return true;
     }
 
