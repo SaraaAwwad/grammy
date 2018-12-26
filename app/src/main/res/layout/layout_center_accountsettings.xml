@@ -15,6 +15,8 @@
             android:text="Account Settings"
             android:textSize="35dp"
             android:textColor="@color/black"
+            android:fontFamily="@font/grandhotelregular"
+
             android:background="@drawable/grey_border_bottom"/>
 
 

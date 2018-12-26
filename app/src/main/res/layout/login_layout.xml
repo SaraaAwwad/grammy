@@ -97,16 +97,24 @@
     <ProgressBar
         android:layout_width="200dp"
         android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="350dp"
         android:id="@+id/loginRequestProgressBar"
         android:layout_centerInParent="true"
-        />
+        android:indeterminateDrawable="@drawable/progressbar"
+        android:indeterminateDuration="1500" />
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please wait..."
+        android:text="Please wait .."
         android:id="@+id/wait"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:paddingLeft="37dp"
+        android:textStyle="bold"
+        android:fontFamily="@font/grandhotelregular"
+        android:textSize="30sp"
         android:layout_alignBottom="@+id/loginRequestProgressBar"
         android:layout_alignRight="@+id/loginRequestProgressBar"
         android:layout_alignLeft="@+id/loginRequestProgressBar"/>

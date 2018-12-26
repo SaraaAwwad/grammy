@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.Utils.FirebaseMethods;
-import com.example.sara.grammy.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -128,27 +127,20 @@ public class RegisterActivity extends Activity {
 
 
     /*_______________________FIREBASE__________________*/
-/*
-    private void checkIfUsernameExists(final String username) {
-        Log.d(TAG, "checkIfUsernameExists: Checking if  " + username + " already exists.");
-        User u = new User();
 
+    private void checkIfUsernameExists(final String username) {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference
                 .child(getString(R.string.dbname_users))
                 .orderByChild(getString(R.string.field_username))
                 .equalTo(username);
-
-        //DataSnapshot to check data from db
-
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
                     if (singleSnapshot.exists()){
-                        Log.d(TAG, "checkIfUsernameExists: FOUND A MATCH: " + singleSnapshot.getValue(User.class).getUsername());
                         append = myRef.push().getKey().substring(3,10);
                         Log.d(TAG, "onDataChange: username already exists. Appending random string to name: " + append);
                     }
@@ -156,12 +148,9 @@ public class RegisterActivity extends Activity {
 
                 String mUsername = "";
                 mUsername = username + append;
-
                 //add new user to the database
                 firebaseMethods.addNewUser(email, mUsername, "", "", "");
-
                 Toast.makeText(mContext, "Signup successful. Sending verification email.", Toast.LENGTH_SHORT).show();
-
                 mAuth.signOut();
             }
 
@@ -170,9 +159,7 @@ public class RegisterActivity extends Activity {
 
             }
         });
-
     }
-*/
 
 
     /**
@@ -200,19 +187,7 @@ public class RegisterActivity extends Activity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        //1st check: Make sure the username is not already in use
-                            if(firebaseMethods.checkIfUsernameExists(username, dataSnapshot)){
-                                append = myRef.push().getKey().substring(3,10);
-                                Log.d(TAG, "onDataChange: username already exists. Appending random string to name: " + append);
-                            }
-                            username = username + append;
-
-                            //add new user to the database
-                            firebaseMethods.addNewUser(email, username, "", "", "");
-
-                            Toast.makeText(mContext, "Signup successful. Sending verification email.", Toast.LENGTH_SHORT).show();
-
-                            mAuth.signOut();
+                            checkIfUsernameExists(username);
                         }
 
                         @Override

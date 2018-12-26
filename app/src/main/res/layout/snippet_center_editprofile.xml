@@ -1,6 +1,5 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -152,8 +151,10 @@
                 android:layout_below="@id/relLayout4"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="50dp"
+                android:paddingBottom="20dp"
                 android:background="@drawable/grey_border_bottom"
-                android:text="PRIVATE INFORMATION"
+                android:text="Private Information"
+                android:fontFamily="@font/grandhotelregular"
                 android:textColor="@color/black"
                 android:textSize="25sp" />
 
@@ -200,12 +201,20 @@
                     android:layout_centerVertical="true"
                     android:src="@drawable/ic_phone" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="40dp"
+                    android:background="@null"
+                    android:text="+0"/>
+
                 <EditText
                     android:id="@+id/phoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="40dp"
+                    android:layout_marginStart="60dp"
                     android:background="@null"
                     android:hint="Phone Number"
                     android:inputType="textNoSuggestions" />

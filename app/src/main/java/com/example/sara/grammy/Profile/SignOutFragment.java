@@ -16,7 +16,6 @@ public class SignOutFragment extends Fragment {
     private static final String TAG = "SignOutFragment";
 
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
