@@ -12,6 +12,7 @@ public class UserAccountSettings {
 
     public UserAccountSettings(String description, String display_name, long followers, long following,
                                long posts, String profile_photo, String username, String website) {
+
         this.description = description;
         this.display_name = display_name;
         this.followers = followers;
@@ -29,7 +30,7 @@ public class UserAccountSettings {
         return description;
     }
 
-    public void setDscription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
