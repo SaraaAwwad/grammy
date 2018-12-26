@@ -1,6 +1,7 @@
 package com.example.sara.grammy.Profile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -44,6 +45,7 @@ public class AccountSettingsActivity extends AppCompatActivity {
         setupSettingsList();
         setUpBottomNav();
         setupFragments();
+        getIncomingIntent();
 
         //Back Arrow Navigation
         ImageView backArrow = findViewById(R.id.backArrow);
@@ -54,6 +56,16 @@ public class AccountSettingsActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void getIncomingIntent(){
+        Intent intent = getIntent();
+
+        if(intent.hasExtra(getString(R.string.calling_activity))){
+
+            setViewPager(pagerAdapter.getFragmentNumber(getString(R.string.edit_profile_fragment)));
+
+        }
     }
 
 
