@@ -17,6 +17,6 @@
 
     <!-- Activity Names -->
     <string name= "profile_activity">Profile Activity</string>
-
+    <string name="opencamera">Open Camera</string>
 
 </resources>
