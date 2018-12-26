@@ -14,7 +14,6 @@ public class User {
     }
 
     public User() {
-
     }
 
     public String getUser_id() {

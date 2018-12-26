@@ -1,8 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_centerHorizontal="true">
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:id="@+id/tvConfirmSignOut"
+            android:text="Are you sure you want to sign out?"/>
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Sign Out"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:id="@+id/btnConfirmSignOut"
+            android:layout_below="@+id/tvConfirmSignOut"
+            android:background="@drawable/white_rounded_button"
+            android:layout_marginTop="20dp"
+            />
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/signoutProgressBar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="Please wait.."
+        android:textColor="@color/black"
+        android:id="@+id/signoutTextView"
+        android:layout_alignLeft="@+id/signoutProgressBar"
+        android:layout_alignBottom="@+id/signoutProgressBar"
+        android:layout_alignRight="@+id/signoutProgressBar"/>
+
+</RelativeLayout>

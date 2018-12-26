@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         setUpBottomNav();
         setupViewPager();
 
-
     }
 
     private void initImageLoader(){
