@@ -1,5 +1,6 @@
 package com.example.sara.grammy.Share;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,8 +24,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 public class GalleryFragment extends android.support.v4.app.Fragment {
@@ -38,6 +37,7 @@ public class GalleryFragment extends android.support.v4.app.Fragment {
 
     private ArrayList<String> directories;
     private String mAppend = "file:/";
+    private String mSelectedImage;
 
     @Nullable
     @Override
@@ -66,6 +66,10 @@ public class GalleryFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating to the final share screen");
+
+                Intent intent = new Intent(getActivity(), NextActivity.class);
+                intent.putExtra(getString(R.string.selected_image), mSelectedImage);
+                startActivity(intent);
             }
         });
         init();
@@ -78,9 +82,18 @@ public class GalleryFragment extends android.support.v4.app.Fragment {
         if(FileSearch.getDirectoryPaths(filePaths.PICTURES) != null){
             directories = FileSearch.getDirectoryPaths(filePaths.PICTURES);
         }
+
+        ArrayList<String> directoryNames = new ArrayList<>();
+        for(int i = 0; i<directories.size();i++){
+            int index =  directories.get(i).lastIndexOf("/");
+            String string = directories.get(i).substring(index).replace("/", " ");
+            directoryNames.add(string);
+
+        }
+
         directories.add(filePaths.CAMERA);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item, directories);
+                android.R.layout.simple_spinner_item, directoryNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         directorySpinner.setAdapter(adapter);
 
@@ -110,13 +123,16 @@ public class GalleryFragment extends android.support.v4.app.Fragment {
         //use the grid adapter to adapt images to gridview
         GridImageAdapter adapter = new GridImageAdapter(getActivity(), R.layout.layout_grid_imageview, mAppend, imgURLs);
         gridView.setAdapter(adapter);
-
+        //select first image
         setImage(imgURLs.get(0), galleryImage, mAppend);
+        mSelectedImage = imgURLs.get(0);
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(TAG, "onItemClick: selected an image: " + imgURLs.get(position));
                 setImage(imgURLs.get(position), galleryImage, mAppend);
+                mSelectedImage = imgURLs.get(position);
             }
         });
 

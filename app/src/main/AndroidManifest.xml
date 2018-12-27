@@ -36,6 +36,7 @@
         <activity android:name=".Profile.ProfileActivity" />
         <activity android:name=".Share.ShareActivity"></activity>
         <activity android:name=".Profile.AccountSettingsActivity"/>
+        <activity android:name=".Share.NextActivity"/>
 
 </application>
 
