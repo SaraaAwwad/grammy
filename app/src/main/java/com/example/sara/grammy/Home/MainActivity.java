@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         setUpBottomNav();
         setupViewPager();
 
-        Log.d(TAG, "New e");
+        Log.d(TAG, "Newm");
 
     }
 

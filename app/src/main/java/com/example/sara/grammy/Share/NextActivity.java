@@ -9,8 +9,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.Utils.FirebaseMethods;
@@ -36,12 +38,19 @@ public class NextActivity extends AppCompatActivity {
 
     //vars
     private String mAppend = "file:/";
+    private int imageCount = 0;
+    private String imgUrl;
+
+    //widgets
+    EditText mCaption;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next);
 
+        mFirebaseMethods = new FirebaseMethods(NextActivity.this);
+        mCaption = (EditText) findViewById(R.id.desc);
         setupFirebaseAuth();
 
         ImageView backArrow = (ImageView) findViewById(R.id.ivbackarrow);
@@ -53,6 +62,7 @@ public class NextActivity extends AppCompatActivity {
             }
         });
 
+        setImage();
 
         TextView share = (TextView) findViewById(R.id.tvShare);
         share.setOnClickListener(new View.OnClickListener() {
@@ -60,10 +70,12 @@ public class NextActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating to the final share screen.");
                 //upload the image to firebase
+                Toast.makeText(NextActivity.this, "Attempting to upload new photo", Toast.LENGTH_SHORT).show();
+                String caption = mCaption.getText().toString();
+                mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, imgUrl);
             }
         });
 
-        setImage();
     }
 
     /**
@@ -72,7 +84,8 @@ public class NextActivity extends AppCompatActivity {
     private void setImage(){
         Intent intent = getIntent();
         ImageView image = (ImageView) findViewById(R.id.imageShare);
-        UniversalImageLoader.setImage(intent.getStringExtra(getString(R.string.selected_image)), image, null, mAppend);
+        imgUrl = intent.getStringExtra(getString(R.string.selected_image));
+        UniversalImageLoader.setImage(imgUrl, image, null, mAppend);
     }
 
      /*
@@ -87,6 +100,8 @@ public class NextActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
+
+        Log.d(TAG, "onDataChange: Image Count = "+imageCount);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -110,7 +125,8 @@ public class NextActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-
+                imageCount = mFirebaseMethods.getImageCount(dataSnapshot);
+                Log.d(TAG, "onDataChange: Image Count = "+imageCount);
             }
 
             @Override

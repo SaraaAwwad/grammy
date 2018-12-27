@@ -20,6 +20,8 @@ public class FilePaths {
 
     public String CAMERA = ROOT_DIR + "/DCIM/Camera";
 
+    public String FIREBASE_IMAGE_STORAGE= "photos/users/";
+
     public static ArrayList<String> getAllShownImagesPath(Activity activity) {
         Uri uri;
         Cursor cursor;

@@ -1,6 +1,8 @@
 package com.example.sara.grammy.Utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
@@ -10,6 +12,8 @@ import com.example.sara.grammy.models.User;
 import com.example.sara.grammy.models.UserAccountSettings;
 import com.example.sara.grammy.models.UserSettings;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,6 +21,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class FirebaseMethods {
     private static final String TAG = "FirebaseMethods";
@@ -26,17 +34,21 @@ public class FirebaseMethods {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
-
+    private StorageReference mStorageReference;
     private String userID;
 
     private Context mContext;
 
+    double mPhotoUploadProgress = 0;
 
     public FirebaseMethods(Context context) {
         mAuth = FirebaseAuth.getInstance();
         mContext = context;
         mFirebaseDatabase = FirebaseDatabase.getInstance();
+
         myRef = mFirebaseDatabase.getReference();
+
+        mStorageReference = FirebaseStorage.getInstance().getReference();
 
         if(mAuth.getCurrentUser() != null){
             userID = mAuth.getCurrentUser().getUid();
@@ -57,6 +69,77 @@ public class FirebaseMethods {
 
 
 
+    public void uploadNewPhoto(String photoType, String caption, final int imageCount, String imageUrl){
+    //2 cases: new photo or update profile photo
+
+        final FilePaths filePaths = new FilePaths();
+        final String x = filePaths.FIREBASE_IMAGE_STORAGE;
+
+        final String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        if(photoType.equals(mContext.getString(R.string.new_photo))){
+            Log.d(TAG, "Uploading new photo");
+            StorageReference storageReference = mStorageReference.child( filePaths.FIREBASE_IMAGE_STORAGE + "/"+ user_id + "/photo" + (imageCount+1) );
+
+            //convert uri to bitmap
+
+            Bitmap b = ImageManager.getBitmap(imageUrl);
+            byte[] bytes = ImageManager.getBytesFromBitmap(b,100);
+            UploadTask uploadTask = null;
+            uploadTask = storageReference.putBytes(bytes);
+
+
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    FilePaths filePaths = new FilePaths();
+                    mStorageReference.child( filePaths.FIREBASE_IMAGE_STORAGE + "/"+ user_id + "/photo" + (imageCount+1))
+                            .getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            task.getResult().toString();
+                        }
+                    });
+
+                   //Uri firebaseUrl = taskSnapshot.getUploadSessionUrl();
+
+                    Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
+
+                    //add the new photo to 'photos' node and 'user_photos' node
+
+                    //navigate to the main feed so the user can see their photo
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d(TAG, "onFailure: Photo upload failed." + e.getMessage());
+                    Log.e(TAG, "onFailure: Photo fialed: "+e.getMessage());
+                    Toast.makeText(mContext, "Photo upload failed ", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+
+
+                    if(progress - 15 > mPhotoUploadProgress){
+                        //no decimals
+                        Toast.makeText(mContext, "photo upload progress: " + String.format("%.0f", progress) + "%", Toast.LENGTH_SHORT).show();
+                        mPhotoUploadProgress = progress;
+                    }
+
+                    Log.d(TAG, "onProgress: upload progress: " + progress + "% done");
+                }
+            });
+
+
+        }else if(photoType.equals(mContext.getString(R.string.profile_photo))){
+            Log.d(TAG, "Uploading new profile photo");
+
+        }
+    }
     /**
      * update username in the 'users' node and 'user_account_settings' node
      * @param username
