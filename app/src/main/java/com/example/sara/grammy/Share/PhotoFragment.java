@@ -56,7 +56,7 @@ public class PhotoFragment extends android.support.v4.app.Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == CAMERA_REQUEST_CODE){
-            Log.d(TAG,"onActivityResult: done taking a photo");
+            Log.d(TAG,"onActivityResult: done taking a Photo");
             Log.d(TAG, "onActivityResult: attempting to navigate to final share screen");
 
         }

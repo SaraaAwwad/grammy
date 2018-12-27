@@ -47,7 +47,7 @@ public class ProfileFragment extends Fragment {
 
 
 //    public interface OnGridImageSelectedListener{
-//        void onGridImageSelected(Photo photo, int activityNumber);
+//        void onGridImageSelected(Photo Photo, int activityNumber);
 //    }
 //    OnGridImageSelectedListener mOnGridImageSelectedListener;
 

@@ -43,7 +43,7 @@ public class ShareActivity extends AppCompatActivity {
     /*
     * return current tab number
     * 0 = gallery fragment
-    * 1 = photo fragment */
+    * 1 = Photo fragment */
     public int getCurrentTabNumber(){
         return  mViewPager.getCurrentItem();
     }
