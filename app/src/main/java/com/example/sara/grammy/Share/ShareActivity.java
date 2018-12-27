@@ -60,21 +60,19 @@ public class ShareActivity extends AppCompatActivity {
         tabLayout.getTabAt(0).setText("GALLERY");
         tabLayout.getTabAt(1).setText("PHOTO");
 
-
-
-
     }
     /*
     * Verify all th permissions passed to the array*/
+
     public void verifyPermissions(String[] permissions){
         Log.d(TAG, "verifyPermissions: verifying permissions.");
 
         ActivityCompat.requestPermissions(ShareActivity.this, permissions, VERIFY_PERMISSIONS_REQUEST);
-
-
     }
+
     /*
     * check an array of permisisons*/
+
     public boolean checkPermissionsArray(String[] permissions){
         Log.d(TAG, "checkPermissionsArray: checking permissions array.");
 

@@ -15,11 +15,14 @@ import android.view.MenuItem;
 import com.example.sara.grammy.Login.LoginActivity;
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.Utils.BottomNavigationViewHelper;
+import com.example.sara.grammy.Utils.FilePaths;
 import com.example.sara.grammy.Utils.SectionsPagerAdapter;
 import com.example.sara.grammy.Utils.UniversalImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,12 +37,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //mAuth = FirebaseAuth.getInstance();
         setupFirebaseAuth();
         initImageLoader();
         setUpBottomNav();
         setupViewPager();
+
+        Log.d(TAG, "New e");
 
     }
 
