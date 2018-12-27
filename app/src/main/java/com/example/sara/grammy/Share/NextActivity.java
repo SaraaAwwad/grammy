@@ -1,6 +1,7 @@
 package com.example.sara.grammy.Share;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
@@ -23,7 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class NextActivity extends AppCompatActivity {
-    private static final String TAG = "NetActivity";
+
+   private static final String TAG = "NextActivity";
 
     //firebase
     private FirebaseAuth mAuth;
@@ -31,14 +33,15 @@ public class NextActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
     private FirebaseMethods mFirebaseMethods;
+
+    //vars
     private String mAppend = "file:/";
-    private int imageCount = 0;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next);
-        mFirebaseMethods = new FirebaseMethods(NextActivity.this);
+
         setupFirebaseAuth();
 
         ImageView backArrow = (ImageView) findViewById(R.id.ivbackarrow);
@@ -50,40 +53,46 @@ public class NextActivity extends AppCompatActivity {
             }
         });
 
+
         TextView share = (TextView) findViewById(R.id.tvShare);
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: navigating to the final share screen");
-                //upload image from firebase
+                Log.d(TAG, "onClick: navigating to the final share screen.");
+                //upload the image to firebase
             }
         });
+
         setImage();
     }
 
-    private void someMethod(){
-
-    }
-
-    //gets the image url from the incoming intent and displays the chosen image
+    /**
+     * gets the image url from the incoming intent and displays the chosen image
+     */
     private void setImage(){
         Intent intent = getIntent();
         ImageView image = (ImageView) findViewById(R.id.imageShare);
         UniversalImageLoader.setImage(intent.getStringExtra(getString(R.string.selected_image)), image, null, mAppend);
     }
 
-    /*FIREBASE*/
+     /*
+    ------------------------------------ Firebase ---------------------------------------------
+     */
+
+    /**
+     * Setup the firebase auth object
+     */
     private void setupFirebaseAuth(){
         Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
-        Log.d(TAG, "onDataChange: image count: " + imageCount);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
+
 
                 if (user != null) {
                     // User is signed in
@@ -92,20 +101,20 @@ public class NextActivity extends AppCompatActivity {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
+                // ...
             }
         };
 
+
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                imageCount = mFirebaseMethods.getImageCount(dataSnapshot);
-                Log.d(TAG, "onDataChange: image count: " + imageCount);
 
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
@@ -115,9 +124,7 @@ public class NextActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        //ERROR
         mAuth.addAuthStateListener(mAuthListener);
-
     }
 
     @Override
@@ -126,5 +133,4 @@ public class NextActivity extends AppCompatActivity {
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
-    }
-}
+    }}

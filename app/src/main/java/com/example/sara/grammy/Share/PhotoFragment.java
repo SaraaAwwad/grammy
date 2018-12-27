@@ -14,6 +14,8 @@ import com.example.sara.grammy.R;
 import com.example.sara.grammy.Utils.Permissions;
 
 public class PhotoFragment extends android.support.v4.app.Fragment {
+    //Fragment to take from camera not gallery
+
     private static final String TAG = "PhotoFragment";
 
     private static final int PHOTO_FRAGMENT_NUM = 1;
