@@ -116,22 +116,32 @@ public class GalleryFragment extends android.support.v4.app.Fragment {
 
         String last = "";
 
+        int count = 0;
+
         for(int i=0; i<fullImagePaths.size();i++){
 
             int index = fullImagePaths.get(i).lastIndexOf("/");
-
             String string = fullImagePaths.get(i).substring(0,index);
 
+            int index2 = string.lastIndexOf("/");
+            String st2 = string.substring(index2).replace("/"," ");
 
-            if(!string.equals(last)){
-                directories.add(string);
-                last = string;
-                int index2 = string.lastIndexOf("/");
-                String st2 = string.substring(index2).replace("/"," ");
-
-                directoryNames.add(st2);
-
+            for (String temp : directoryNames) {
+                if(temp.equals(st2)){
+                        //count += 1;
+                    count = 1;
+                    break;
+                }
             }
+
+            if(count==0){
+                directories.add(string);
+                directoryNames.add(st2);
+               // last = st2;
+            }
+
+            count = 0;
+
         }
 
       /*

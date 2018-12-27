@@ -42,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
         setUpBottomNav();
         setupViewPager();
 
-        Log.d(TAG, "Newm");
-
     }
 
     private void initImageLoader(){
