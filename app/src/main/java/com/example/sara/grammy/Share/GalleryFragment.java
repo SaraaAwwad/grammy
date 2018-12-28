@@ -223,5 +223,4 @@ public class GalleryFragment extends android.support.v4.app.Fragment {
         });
     }
 
-
 }

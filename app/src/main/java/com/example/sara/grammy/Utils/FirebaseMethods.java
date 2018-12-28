@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.sara.grammy.R;
+import com.example.sara.grammy.models.Photo;
 import com.example.sara.grammy.models.User;
 import com.example.sara.grammy.models.UserAccountSettings;
 import com.example.sara.grammy.models.UserSettings;
@@ -25,6 +26,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class FirebaseMethods {
     private static final String TAG = "FirebaseMethods";
@@ -69,7 +75,7 @@ public class FirebaseMethods {
 
 
 
-    public void uploadNewPhoto(String photoType, String caption, final int imageCount, String imageUrl){
+    public void uploadNewPhoto(String photoType, final String caption, final int imageCount, String imageUrl){
     //2 cases: new photo or update profile photo
 
         final FilePaths filePaths = new FilePaths();
@@ -97,7 +103,8 @@ public class FirebaseMethods {
                             .getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                         @Override
                         public void onComplete(@NonNull Task<Uri> task) {
-                            task.getResult().toString();
+
+                            addPhotoToDatabase(caption, task.getResult().toString());
                         }
                     });
 
@@ -140,6 +147,34 @@ public class FirebaseMethods {
 
         }
     }
+
+    private String getTimeStamp(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CANADA);
+        sdf.setTimeZone(TimeZone.getTimeZone("Africa/Cairo"));
+        return sdf.format(new Date());
+    }
+
+    private void addPhotoToDatabase(String caption, String url) {
+
+        String newPhotoKey = myRef.child(mContext.getString(R.string.dbname_photos)).push().getKey();
+        String tags = StringManipulation.getTags(caption);
+
+        Photo photo = new Photo();
+        photo.setCaption(caption);
+        photo.setDate_created(getTimeStamp());
+        photo.setImage_path(url);
+        photo.setPhoto_id(newPhotoKey);
+        photo.setTags(tags);
+        photo.setUser_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        //insert into db
+        myRef.child(mContext.getString(R.string.dbname_user_photos))
+                .child(FirebaseAuth.getInstance().getCurrentUser()
+                        .getUid()).child(newPhotoKey).setValue(photo);
+        myRef.child(mContext.getString(R.string.dbname_photos)).child(newPhotoKey).setValue(photo);
+
+    }
+
     /**
      * update username in the 'users' node and 'user_account_settings' node
      * @param username
