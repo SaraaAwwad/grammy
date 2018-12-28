@@ -62,6 +62,11 @@ public class ShareActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setText("PHOTO");
 
     }
+
+    public int getTask(){
+        Log.d(TAG, "getTask: TASK: " + getIntent().getFlags());
+        return getIntent().getFlags();
+    }
     /*
     * Verify all th permissions passed to the array*/
 

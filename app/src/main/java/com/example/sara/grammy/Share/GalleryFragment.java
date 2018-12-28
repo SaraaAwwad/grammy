@@ -20,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.sara.grammy.Home.MainActivity;
+import com.example.sara.grammy.Profile.AccountSettingsActivity;
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.Utils.FilePaths;
 import com.example.sara.grammy.Utils.FileSearch;
@@ -75,14 +76,31 @@ public class GalleryFragment extends android.support.v4.app.Fragment {
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating to the final share screen");
 
-                Intent intent = new Intent(getActivity(), NextActivity.class);
-                intent.putExtra(getString(R.string.selected_image), mSelectedImage);
-                startActivity(intent);
+                if (isRootTask()){
+                    Intent intent = new Intent(getActivity(), NextActivity.class);
+                    intent.putExtra(getString(R.string.selected_image), mSelectedImage);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(getActivity(), AccountSettingsActivity.class);
+                    intent.putExtra(getString(R.string.selected_image), mSelectedImage);
+                    intent.putExtra(getString(R.string.return_to_fragment), getString(R.string.edit_profile_fragment));
+                    startActivity(intent);
+                }
+
+
             }
         });
         init();
 
         return view;
+    }
+
+    private boolean isRootTask(){
+        if(((ShareActivity)getActivity()).getTask() == 0){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     private void init(){
