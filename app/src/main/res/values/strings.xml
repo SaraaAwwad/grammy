@@ -23,16 +23,25 @@
     <string name="field_phone_number">phone_number</string>
     <string name="dbname_photos">photos</string>
     <string name="dbname_user_photos">user_photos</string>
+    <string name="field_user_id">user_id</string>
 
 
     <!-- Intent Extras -->
     <string name= "calling_activity">calling_activity</string>
     <string name="selected_image">select_image</string>
+
     <string name="selected_bitmap">selected_bitmap</string>
+
+    <string name="intent_user">intent_user</string>
+
     <string name="return_to_fragment">return_to_fragment</string>
 
     <!-- Activity Names -->
     <string name= "profile_activity">Profile Activity</string>
+
+
+    <string name="search_activity">Search Activity</string>
+
     <string name="opencamera">Open Camera</string>
 
     <!-- photo types -->
