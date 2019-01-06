@@ -2,6 +2,7 @@ package com.example.sara.grammy.Profile;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -63,16 +64,29 @@ public class AccountSettingsActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         //if there is an imageURL attached as an extra, then it was chosen from gallery/photo fragment
-        if (intent.hasExtra(getString(R.string.selected_image))){
-            Log.d(TAG, "getIncomingIntent: New incoming imageURL");
+        Log.d(TAG, "getIncomingIntent: New incoming imageURL");
+
+        if(intent.hasExtra(getString(R.string.selected_image)) || intent.hasExtra(getString(R.string.selected_bitmap))){
+
             if(intent.getStringExtra(getString(R.string.return_to_fragment)).equals(getString(R.string.edit_profile_fragment))){
 
-                //set the new profile picture
-                FirebaseMethods firebaseMethods = new FirebaseMethods(AccountSettingsActivity.this);
-                firebaseMethods.uploadNewPhoto(getString(R.string.profile_photo), null, 0,
-                        intent.getStringExtra(getString(R.string.selected_image)));
+                if(intent.hasExtra(getString(R.string.selected_image))){
+
+                    //set the new profile picture
+                    FirebaseMethods firebaseMethods = new FirebaseMethods(AccountSettingsActivity.this);
+                    firebaseMethods.uploadNewPhoto(getString(R.string.profile_photo), null, 0,
+                            intent.getStringExtra(getString(R.string.selected_image)), null);
+
+                }else if(intent.hasExtra(getString(R.string.selected_bitmap))){
+                    //set the new profile picture
+                    FirebaseMethods firebaseMethods = new FirebaseMethods(AccountSettingsActivity.this);
+
+                    firebaseMethods.uploadNewPhoto(getString(R.string.profile_photo), null, 0,
+                           null, (Bitmap) intent.getParcelableExtra(getString(R.string.selected_bitmap)));
+                }
             }
         }
+
 
         if(intent.hasExtra(getString(R.string.calling_activity))){
 
@@ -118,7 +132,6 @@ public class AccountSettingsActivity extends AppCompatActivity {
         });
 
     }
-
 
 
      //BottomNavigationView setup

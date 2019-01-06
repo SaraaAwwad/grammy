@@ -1,6 +1,7 @@
 package com.example.sara.grammy.Share;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.sara.grammy.Profile.AccountSettingsActivity;
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.Utils.Permissions;
 
@@ -61,6 +63,36 @@ public class PhotoFragment extends android.support.v4.app.Fragment {
             Log.d(TAG,"onActivityResult: done taking a Photo");
             Log.d(TAG, "onActivityResult: attempting to navigate to final share screen");
 
+            Bitmap bitmap;
+            bitmap = (Bitmap) data.getExtras().get("data");
+
+            if (isRootTask()){
+                //sharing photo from camera
+                
+
+            }else{
+            //opening camera to take photo for profile photo
+                try{
+                    Log.d(TAG, "onActivityResult: received bitmap from camera" + bitmap);
+
+                    Intent intent = new Intent(getActivity(), AccountSettingsActivity.class);
+                    intent.putExtra(getString(R.string.selected_bitmap), bitmap);
+                    intent.putExtra(getString(R.string.return_to_fragment), getString(R.string.edit_profile_fragment));
+                    startActivity(intent);
+                    getActivity().finish();
+
+                }catch(NullPointerException e){
+                    Log.d(TAG, "onActivityResult: Null pointer exception");
+                }
+            }
+        }
+    }
+
+    private boolean isRootTask(){
+        if(((ShareActivity)getActivity()).getTask() == 0){
+            return true;
+        }else {
+            return false;
         }
     }
 }

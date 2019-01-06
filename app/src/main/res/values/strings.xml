@@ -28,10 +28,11 @@
     <!-- Intent Extras -->
     <string name= "calling_activity">calling_activity</string>
     <string name="selected_image">select_image</string>
+    <string name="selected_bitmap">selected_bitmap</string>
     <string name="return_to_fragment">return_to_fragment</string>
+
     <!-- Activity Names -->
     <string name= "profile_activity">Profile Activity</string>
-
     <string name="opencamera">Open Camera</string>
 
     <!-- photo types -->
