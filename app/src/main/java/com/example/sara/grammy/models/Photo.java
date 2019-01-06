@@ -3,6 +3,8 @@ package com.example.sara.grammy.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 public class Photo implements Parcelable {
     private String caption;
     private String date_created;
@@ -10,20 +12,26 @@ public class Photo implements Parcelable {
     private String photo_id;
     private String user_id;
     private String tags;
+    private List<Like> likes;
+    private List<Comment> comments;
+
 
     public Photo(){
 
     }
 
-    public Photo(String caption, String date_created, String image_path, String photo_id, String user_id, String tags){
+    public Photo(String caption, String date_created, String image_path, String photo_id,
+                 String user_id, String tags, List<Like> likes, List<Comment> comments) {
         this.caption = caption;
         this.date_created = date_created;
         this.image_path = image_path;
         this.photo_id = photo_id;
         this.user_id = user_id;
         this.tags = tags;
-
+        this.likes = likes;
+        this.comments = comments;
     }
+
 
     protected Photo(Parcel in) {
         caption = in.readString();
@@ -45,6 +53,14 @@ public class Photo implements Parcelable {
             return new Photo[size];
         }
     };
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     public String getCaption(){
         return caption;

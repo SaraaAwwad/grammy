@@ -188,16 +188,16 @@ public class ViewPostFragment extends Fragment {
 //            init();
 //        }
 //    }
-//
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        try{
-//            mOnCommentThreadSelectedListener = (OnCommentThreadSelectedListener) getActivity();
-//        }catch (ClassCastException e){
-//            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
-//        }
-//    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try{
+            mOnCommentThreadSelectedListener = (OnCommentThreadSelectedListener) getActivity();
+        }catch (ClassCastException e){
+            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
+        }
+    }
 
 //    private void getLikesString(){
 //        Log.d(TAG, "getLikesString: getting likes string");
@@ -453,22 +453,22 @@ public class ViewPostFragment extends Fragment {
 //            }
 //        });
 //
-//        mBackArrow.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d(TAG, "onClick: navigating back");
-//                getActivity().getSupportFragmentManager().popBackStack();
-//            }
-//        });
-//
-//        mComment.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d(TAG, "onClick: navigating back");
-//                mOnCommentThreadSelectedListener.onCommentThreadSelectedListener(mPhoto);
-//
-//            }
-//        });
+        mBackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: navigating back");
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+
+        mComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: navigating back");
+                mOnCommentThreadSelectedListener.onCommentThreadSelectedListener(mPhoto);
+
+            }
+        });
 //
 //        if(mLikedByCurrentUser){
 //            mHeartWhite.setVisibility(View.GONE);
