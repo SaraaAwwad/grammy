@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.sara.grammy.Home.HomeFragment;
 import com.example.sara.grammy.Home.MainActivity;
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.models.Photo;
@@ -366,7 +365,8 @@ public class FirebaseMethods {
                 0,
                 profile_photo,
                 username,
-                website
+                website,
+                userID
         );
 
         myRef.child(mContext.getString(R.string.dbname_user_account_settings))
