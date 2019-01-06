@@ -93,7 +93,7 @@ public class FirebaseMethods {
             //convert uri to bitmap
 
             Bitmap b = ImageManager.getBitmap(imageUrl);
-            byte[] bytes = ImageManager.getBytesFromBitmap(b,100);
+            byte[] bytes = ImageManager.getBytesFromBitmap(b,50);
             UploadTask uploadTask = null;
             uploadTask = storageReference.putBytes(bytes);
 
@@ -107,6 +107,7 @@ public class FirebaseMethods {
                         @Override
                         public void onComplete(@NonNull Task<Uri> task) {
                             //getdownloadUrl
+                            //add the new photo to 'photos' node and 'user_photos' node
                             addPhotoToDatabase(caption, task.getResult().toString());
                         }
                     });
@@ -115,7 +116,7 @@ public class FirebaseMethods {
 
                     Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
 
-                    //add the new photo to 'photos' node and 'user_photos' node
+
 
                     //navigate to the main feed so the user can see their photo
                     Intent intent = new Intent(mContext, MainActivity.class);
@@ -148,13 +149,18 @@ public class FirebaseMethods {
 
 
         }else if(photoType.equals(mContext.getString(R.string.profile_photo))){
+
+
             Log.d(TAG, "Uploading new profile photo");
-            StorageReference storageReference = mStorageReference.child( filePaths.FIREBASE_IMAGE_STORAGE + "/"+ user_id + "/profile_photo");
+
+
+            StorageReference storageReference =
+                    mStorageReference.child( filePaths.FIREBASE_IMAGE_STORAGE + "/"+ user_id + "/profile_photo");
 
             //convert uri to bitmap
 
             Bitmap b = ImageManager.getBitmap(imageUrl);
-            byte[] bytes = ImageManager.getBytesFromBitmap(b,100);
+            byte[] bytes = ImageManager.getBytesFromBitmap(b,50);
             UploadTask uploadTask = null;
             uploadTask = storageReference.putBytes(bytes);
 
@@ -163,7 +169,7 @@ public class FirebaseMethods {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     FilePaths filePaths = new FilePaths();
-                    mStorageReference.child( filePaths.FIREBASE_IMAGE_STORAGE + "/"+ user_id + "/photo" + (imageCount+1))
+                    mStorageReference.child( filePaths.FIREBASE_IMAGE_STORAGE + "/"+ user_id + "/profile_photo" )
                             .getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                         @Override
                         public void onComplete(@NonNull Task<Uri> task) {
@@ -171,10 +177,7 @@ public class FirebaseMethods {
                             //addPhotoToDatabase(caption, task.getResult().toString());
 
                             //insert into "user_account_settings" node
-                            myRef.child(mContext.getString(R.string.dbname_user_account_settings))
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .child(mContext.getString(R.string.profile_photo))
-                                    .setValue(task);
+                            setProfilePhoto(task.getResult().toString());
 
                         }
                     });
@@ -182,9 +185,6 @@ public class FirebaseMethods {
                     //Uri firebaseUrl = taskSnapshot.getUploadSessionUrl();
 
                     Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
-
-
-
 
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -211,8 +211,6 @@ public class FirebaseMethods {
                 }
             });
 
-
-
         }
     }
 
@@ -220,6 +218,16 @@ public class FirebaseMethods {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CANADA);
         sdf.setTimeZone(TimeZone.getTimeZone("Africa/Cairo"));
         return sdf.format(new Date());
+    }
+
+    private void setProfilePhoto(String url){
+        Log.d(TAG, "setProfilePhoto: Setting profile photo " + url);
+        Log.d(TAG, "setProfilePhoto: setting new profile image: " + url);
+
+        myRef.child(mContext.getString(R.string.dbname_user_account_settings))
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(mContext.getString(R.string.profile_photo))
+                .setValue(url);
     }
 
     private void addPhotoToDatabase(String caption, String url) {
@@ -319,8 +327,6 @@ public class FirebaseMethods {
                     .setValue(phoneNumber);
         }
     }
-
-
 
 
     public void registerNewEmail(final String email, String password, final String username){
