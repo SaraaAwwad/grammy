@@ -68,7 +68,18 @@ public class PhotoFragment extends android.support.v4.app.Fragment {
 
             if (isRootTask()){
                 //sharing photo from camera
-                
+
+                try{
+                    Log.d(TAG, "onActivityResult: received bitmap from camera" + bitmap);
+
+                    Intent intent = new Intent(getActivity(), NextActivity.class);
+                    intent.putExtra(getString(R.string.selected_bitmap), bitmap);
+                    startActivity(intent);
+
+                }catch(NullPointerException e){
+                    Log.d(TAG, "onActivityResult: Null pointer exception");
+                }
+
 
             }else{
             //opening camera to take photo for profile photo
