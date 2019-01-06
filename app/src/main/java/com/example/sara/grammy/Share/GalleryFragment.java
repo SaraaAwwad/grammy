@@ -77,10 +77,12 @@ public class GalleryFragment extends android.support.v4.app.Fragment {
                     intent.putExtra(getString(R.string.selected_image), mSelectedImage);
                     startActivity(intent);
                 }else{
+                    //not root task for gallery; only changing profile photo
                     Intent intent = new Intent(getActivity(), AccountSettingsActivity.class);
                     intent.putExtra(getString(R.string.selected_image), mSelectedImage);
                     intent.putExtra(getString(R.string.return_to_fragment), getString(R.string.edit_profile_fragment));
                     startActivity(intent);
+                    getActivity().finish();
                 }
 
 
