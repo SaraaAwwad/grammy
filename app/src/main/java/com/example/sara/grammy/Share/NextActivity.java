@@ -2,6 +2,7 @@ package com.example.sara.grammy.Share;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -67,15 +69,17 @@ public class NextActivity extends AppCompatActivity {
 
         setImage();
 
-        TextView share = (TextView) findViewById(R.id.tvShare);
+        final Button share = (Button) findViewById(R.id.tvShare);
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                share.setEnabled(false);
+                share.setBackgroundColor(Color.DKGRAY);
+
                 Log.d(TAG, "onClick: navigating to the final share screen.");
                 //upload the image to firebase
                 Toast.makeText(NextActivity.this, "Attempting to upload new photo", Toast.LENGTH_SHORT).show();
                 String caption = mCaption.getText().toString();
-
 
                 if (intent.hasExtra(getString(R.string.selected_image))){
                     imgUrl = intent.getStringExtra(getString(R.string.selected_image));

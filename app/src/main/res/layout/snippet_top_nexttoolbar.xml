@@ -23,7 +23,7 @@
                     android:src="@drawable/ic_backarrow" />
 
 
-                <TextView
+                <Button
                     android:id="@+id/tvShare"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -33,6 +33,8 @@
                     android:text="Share"
                     android:textColor="@color/link_blue"
                     android:textSize="20sp" />
+
+
 
             </RelativeLayout>
 

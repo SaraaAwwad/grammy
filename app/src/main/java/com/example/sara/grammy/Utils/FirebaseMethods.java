@@ -119,8 +119,6 @@ public class FirebaseMethods {
 
                     Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
 
-
-
                     //navigate to the main feed so the user can see their photo
                     Intent intent = new Intent(mContext, MainActivity.class);
                     mContext.startActivity(intent);
