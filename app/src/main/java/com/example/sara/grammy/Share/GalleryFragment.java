@@ -1,11 +1,8 @@
 package com.example.sara.grammy.Share;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +16,6 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.sara.grammy.Home.MainActivity;
 import com.example.sara.grammy.Profile.AccountSettingsActivity;
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.Utils.FilePaths;
@@ -200,8 +196,12 @@ public class GalleryFragment extends android.support.v4.app.Fragment {
         gridView.setAdapter(adapter);
 
         //select first image
-        setImage(imgURLs.get(0), galleryImage, mAppend);
-        mSelectedImage = imgURLs.get(0);
+        try{
+            setImage(imgURLs.get(0), galleryImage, mAppend);
+            mSelectedImage = imgURLs.get(0);
+        }catch (ArrayIndexOutOfBoundsException e){
+            Log.e(TAG,"setupGridView: ArrayIndexOutOfBoundsException "+e.getMessage());
+        }
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
