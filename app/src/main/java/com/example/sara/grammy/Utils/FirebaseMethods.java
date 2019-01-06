@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.sara.grammy.Home.HomeFragment;
 import com.example.sara.grammy.Home.MainActivity;
+import com.example.sara.grammy.Profile.AccountSettingsActivity;
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.models.Photo;
 import com.example.sara.grammy.models.User;
@@ -164,7 +165,10 @@ public class FirebaseMethods {
             UploadTask uploadTask = null;
             uploadTask = storageReference.putBytes(bytes);
 
-
+            ((AccountSettingsActivity)mContext).setViewPager(
+                    ((AccountSettingsActivity) mContext)
+                            .pagerAdapter.getFragmentNumber(mContext.getString(R.string.edit_profile_fragment)));
+            
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -174,7 +178,6 @@ public class FirebaseMethods {
                         @Override
                         public void onComplete(@NonNull Task<Uri> task) {
                             //getdownloadUrl
-                            //addPhotoToDatabase(caption, task.getResult().toString());
 
                             //insert into "user_account_settings" node
                             setProfilePhoto(task.getResult().toString());
