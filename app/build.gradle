@@ -32,6 +32,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    implementation 'com.google.firebase:firebase-storage:+'
+
     implementation 'com.google.firebase:firebase-core:+'
 
     implementation 'de.hdodenhof:circleimageview:2.2.0'

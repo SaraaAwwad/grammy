@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.Utils.BottomNavigationViewHelper;
+import com.example.sara.grammy.Utils.FirebaseMethods;
 import com.example.sara.grammy.Utils.SectionsStatePagerAdapter;
 
 import java.util.ArrayList;
@@ -60,6 +61,18 @@ public class AccountSettingsActivity extends AppCompatActivity {
 
     private void getIncomingIntent(){
         Intent intent = getIntent();
+
+        //if there is an imageURL attached as an extra, then it was chosen from gallery/photo fragment
+        if (intent.hasExtra(getString(R.string.selected_image))){
+            Log.d(TAG, "getIncomingIntent: New incoming imageURL");
+            if(intent.getStringExtra(getString(R.string.return_to_fragment)).equals(getString(R.string.edit_profile_fragment))){
+
+                //set the new profile picture
+                FirebaseMethods firebaseMethods = new FirebaseMethods(AccountSettingsActivity.this);
+                firebaseMethods.uploadNewPhoto(getString(R.string.profile_photo), null, 0,
+                        intent.getStringExtra(getString(R.string.selected_image)));
+            }
+        }
 
         if(intent.hasExtra(getString(R.string.calling_activity))){
 

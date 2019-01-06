@@ -30,11 +30,16 @@
     <string name= "calling_activity">calling_activity</string>
     <string name="selected_image">select_image</string>
     <string name="intent_user">intent_user</string>
+    <string name="return_to_fragment">return_to_fragment</string>
 
     <!-- Activity Names -->
     <string name= "profile_activity">Profile Activity</string>
     <string name="search_activity">Search Activity</string>
 
     <string name="opencamera">Open Camera</string>
+
+    <!-- photo types -->
+    <string name="new_photo">new_photo</string>
+    <string name="profile_photo">profile_photo</string>
 
 </resources>

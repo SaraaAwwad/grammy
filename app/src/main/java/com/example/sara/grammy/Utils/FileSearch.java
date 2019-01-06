@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class FileSearch {
 
     /*search directory and return list of all directories inside*/
+
     public static ArrayList<String> getDirectoryPaths(String directory){
 
         ArrayList<String> pathArray = new ArrayList<>();

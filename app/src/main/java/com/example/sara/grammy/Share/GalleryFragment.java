@@ -1,8 +1,11 @@
 package com.example.sara.grammy.Share;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.sara.grammy.Home.MainActivity;
+import com.example.sara.grammy.Profile.AccountSettingsActivity;
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.Utils.FilePaths;
 import com.example.sara.grammy.Utils.FileSearch;
@@ -35,13 +40,14 @@ public class GalleryFragment extends android.support.v4.app.Fragment {
     private ProgressBar mProgressBar;
     private Spinner directorySpinner;
 
-    private ArrayList<String> directories;
+    private ArrayList<String> directories, fullImagePaths, directoryPaths;
     private String mAppend = "file:/";
     private String mSelectedImage;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_gallery,container,false);
         galleryImage = (ImageView)view.findViewById(R.id.galleryImageView);
         gridView = (GridView) view.findViewById(R.id.galleryGridView);
@@ -49,6 +55,9 @@ public class GalleryFragment extends android.support.v4.app.Fragment {
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         mProgressBar.setVisibility(View.GONE);
         directories = new ArrayList<>();
+        fullImagePaths = new ArrayList<>();
+        directoryPaths = new ArrayList<>();
+
         Log.d(TAG, "onCreateView: started.");
 
         ImageView closeShare = (ImageView) view.findViewById(R.id.ivcloseShare);
@@ -67,9 +76,18 @@ public class GalleryFragment extends android.support.v4.app.Fragment {
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating to the final share screen");
 
-                Intent intent = new Intent(getActivity(), NextActivity.class);
-                intent.putExtra(getString(R.string.selected_image), mSelectedImage);
-                startActivity(intent);
+                if (isRootTask()){
+                    Intent intent = new Intent(getActivity(), NextActivity.class);
+                    intent.putExtra(getString(R.string.selected_image), mSelectedImage);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(getActivity(), AccountSettingsActivity.class);
+                    intent.putExtra(getString(R.string.selected_image), mSelectedImage);
+                    intent.putExtra(getString(R.string.return_to_fragment), getString(R.string.edit_profile_fragment));
+                    startActivity(intent);
+                }
+
+
             }
         });
         init();
@@ -77,14 +95,29 @@ public class GalleryFragment extends android.support.v4.app.Fragment {
         return view;
     }
 
-    private void init(){
-        FilePaths filePaths = new FilePaths();
-        if(FileSearch.getDirectoryPaths(filePaths.PICTURES) != null){
-            directories = FileSearch.getDirectoryPaths(filePaths.PICTURES);
+    private boolean isRootTask(){
+        if(((ShareActivity)getActivity()).getTask() == 0){
+            return true;
+        }else {
+            return false;
         }
+    }
 
-        ArrayList<String> directoryNames = new ArrayList<>();
-        for(int i = 0; i<directories.size();i++){
+    private void init(){
+        //"ex: /storage/0/emulated/camera/blabla.jpg"
+
+       fullImagePaths = FilePaths.getAllShownImagesPath(getActivity());
+
+/*
+        FilePaths filePaths = new FilePaths();
+
+        if(FileSearch.getDirectoryPaths(filePaths.PICTURES) != null){
+            Log.d(TAG, "Directories exist");
+            directories = FileSearch.getDirectoryPaths(filePaths.PICTURES);
+        }else{
+            Log.d(TAG, "Directories doesnt exist");
+        }
+                for(int i = 0; i<directories.size();i++){
             int index =  directories.get(i).lastIndexOf("/");
             String string = directories.get(i).substring(index).replace("/", " ");
             directoryNames.add(string);
@@ -92,6 +125,46 @@ public class GalleryFragment extends android.support.v4.app.Fragment {
         }
 
         directories.add(filePaths.CAMERA);
+       */
+
+        ArrayList<String> directoryNames = new ArrayList<>();
+        fullImagePaths = FilePaths.getAllShownImagesPath(getActivity());
+
+        Log.d(TAG, "Full= "+fullImagePaths);
+
+        String last = "";
+
+        int count = 0;
+
+        for(int i=0; i<fullImagePaths.size();i++){
+
+            int index = fullImagePaths.get(i).lastIndexOf("/");
+            String string = fullImagePaths.get(i).substring(0,index);
+
+            int index2 = string.lastIndexOf("/");
+            String st2 = string.substring(index2).replace("/"," ");
+
+            for (String temp : directoryNames) {
+                if(temp.equals(st2)){
+                        //count += 1;
+                    count = 1;
+                    break;
+                }
+            }
+
+            if(count==0){
+                directories.add(string);
+                directoryNames.add(st2);
+               // last = st2;
+            }
+
+            count = 0;
+
+        }
+
+      /*
+
+*/
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, directoryNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -123,6 +196,7 @@ public class GalleryFragment extends android.support.v4.app.Fragment {
         //use the grid adapter to adapt images to gridview
         GridImageAdapter adapter = new GridImageAdapter(getActivity(), R.layout.layout_grid_imageview, mAppend, imgURLs);
         gridView.setAdapter(adapter);
+
         //select first image
         setImage(imgURLs.get(0), galleryImage, mAppend);
         mSelectedImage = imgURLs.get(0);
@@ -166,6 +240,5 @@ public class GalleryFragment extends android.support.v4.app.Fragment {
             }
         });
     }
-
 
 }
