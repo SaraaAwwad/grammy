@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         mFrameLayout = (FrameLayout) findViewById(R.id.container);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relLayoutParent);
 
-        Log.d(TAG, "new heart");
+        Log.d(TAG, "new chmap");
 
         setupFirebaseAuth();
         initImageLoader();
