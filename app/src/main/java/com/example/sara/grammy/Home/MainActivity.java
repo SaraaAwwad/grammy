@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import com.example.sara.grammy.Login.LoginActivity;
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.Utils.BottomNavigationViewHelper;
+import com.example.sara.grammy.Utils.MainfeedListAdapter;
 import com.example.sara.grammy.Utils.SectionsPagerAdapter;
 import com.example.sara.grammy.Utils.UniversalImageLoader;
 import com.example.sara.grammy.Utils.ViewCommentsFragment;
@@ -29,7 +30,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainfeedListAdapter.OnLoadMoreItemsListener{
+
+    @Override
+    public void onLoadMoreItems() {
+        HomeFragment fragment = (HomeFragment) getSupportFragmentManager()
+                .findFragmentByTag("android:switcher"+R.id.viewpager_container + ":" + mViewPager.getCurrentItem());
+     if(fragment != null){
+         fragment.displayMorePhotos();
+     }
+    }
 
     private static final String TAG ="MainActivity" ;
     private static final int ACTIVITY_NUM = 0;
@@ -50,12 +60,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         mViewPager = (ViewPager) findViewById(R.id.viewpager_container);
         mFrameLayout = (FrameLayout) findViewById(R.id.container);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relLayoutParent);
 
-        Log.d(TAG, "new yarab 3");
+        Log.d(TAG, "new yarab 4");
 
         setupFirebaseAuth();
         initImageLoader();
@@ -192,14 +201,5 @@ public class MainActivity extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-
-
-
-
-
-
-
-
-
 
 }

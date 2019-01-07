@@ -44,6 +44,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainfeedListAdapter extends ArrayAdapter{
 
+    public interface OnLoadMoreItemsListener{
+        void onLoadMoreItems();
+    }
+
+    OnLoadMoreItemsListener mOnLoadMoreItemsListener;
+
     private static final String TAG = "MainfeedListAdapter";
 
     private LayoutInflater mInflater;
@@ -51,6 +57,7 @@ public class MainfeedListAdapter extends ArrayAdapter{
     private Context mContext;
     private DatabaseReference mReference;
     private String currentUsername = "";
+
 
     public MainfeedListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Photo> objects) {
         super(context, resource, objects);
@@ -238,6 +245,9 @@ public class MainfeedListAdapter extends ArrayAdapter{
             }
         });
 
+        if(reachedEndOfList(position)){
+            loadMoreData();
+        }
         return convertView;
     }
 
@@ -261,6 +271,28 @@ public class MainfeedListAdapter extends ArrayAdapter{
 
             }
         });
+    }
+
+    private boolean reachedEndOfList(int position){
+
+        return position == getCount() - 1;
+    }
+
+    private void loadMoreData(){
+
+        try{
+            mOnLoadMoreItemsListener = (OnLoadMoreItemsListener) getContext();
+
+        }catch (ClassCastException e ){
+            Log.e(TAG, "loadMoreData: ClassCastException: " + e.getMessage());
+        }
+
+        try{
+            mOnLoadMoreItemsListener.onLoadMoreItems();
+
+        }catch (NullPointerException e ){
+            Log.e(TAG, "loadMoreData: NullPointerException: " + e.getMessage());
+        }
     }
 
     public class GestureListener extends GestureDetector.SimpleOnGestureListener{
