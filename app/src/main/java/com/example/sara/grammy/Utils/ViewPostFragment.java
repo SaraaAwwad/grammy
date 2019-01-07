@@ -1,7 +1,6 @@
 package com.example.sara.grammy.Utils;
 
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,7 +21,6 @@ import android.widget.TextView;
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.models.Comment;
 import com.example.sara.grammy.models.Like;
-
 import com.example.sara.grammy.models.Photo;
 import com.example.sara.grammy.models.User;
 import com.example.sara.grammy.models.UserAccountSettings;
@@ -501,7 +499,7 @@ public class ViewPostFragment extends Fragment {
             mComments.setText("");
         }
 
-        mComments.setOnClickListener(new View.OnClickListener() {
+        mComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating to comments thread");
@@ -518,7 +516,7 @@ public class ViewPostFragment extends Fragment {
             }
         });
 
-        mComment.setOnClickListener(new View.OnClickListener() {
+        mComments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating back");

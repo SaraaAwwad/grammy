@@ -28,12 +28,12 @@ public class ProfileActivity extends AppCompatActivity
         Bundle args = new Bundle();
         args.putParcelable(getString(R.string.photo), photo);
         fragment.setArguments(args);
-/*
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);
         transaction.addToBackStack(getString(R.string.view_comments_fragment));
         transaction.commit();
- */   }
+    }
 
 
     @Override
