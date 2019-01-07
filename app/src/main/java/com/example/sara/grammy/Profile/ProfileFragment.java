@@ -190,6 +190,7 @@ public class ProfileFragment extends Fragment {
                 }
                 //setting up image grid
                 int gridWidth = getResources().getDisplayMetrics().widthPixels;
+
                 int imageWidth = gridWidth/NUM_GRID_COLUMNS;
                 gridView.setColumnWidth(imageWidth);
 

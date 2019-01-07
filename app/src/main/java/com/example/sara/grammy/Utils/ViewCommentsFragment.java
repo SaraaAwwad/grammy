@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.sara.grammy.Home.MainActivity;
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.models.Comment;
+import com.example.sara.grammy.models.Like;
 import com.example.sara.grammy.models.Photo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
@@ -68,13 +70,12 @@ public class ViewCommentsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_comments, container, false);
-        mBackArrow = (ImageView) view.findViewById(R.id.backArrow);
-        mCheckMark = (ImageView) view.findViewById(R.id.ivPostComment);
-        mComment = (EditText) view.findViewById(R.id.comment);
-        mListView = (ListView) view.findViewById(R.id.listView);
+        mBackArrow = view.findViewById(R.id.backArrow);
+        mCheckMark = view.findViewById(R.id.ivPostComment);
+        mComment = view.findViewById(R.id.comment);
+        mListView = view.findViewById(R.id.listView);
         mComments = new ArrayList<>();
         mContext = getActivity();
-
 
         try{
             mPhoto = getPhotoFromBundle();
@@ -83,9 +84,6 @@ public class ViewCommentsFragment extends Fragment {
         }catch (NullPointerException e){
             Log.e(TAG, "onCreateView: NullPointerException: " + e.getMessage() );
         }
-
-
-
 
         return view;
     }
@@ -164,8 +162,8 @@ public class ViewCommentsFragment extends Fragment {
     }
 
     private String getTimestamp(){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CANADA);
-        sdf.setTimeZone(TimeZone.getTimeZone("Canada/Pacific"));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
+        sdf.setTimeZone(TimeZone.getTimeZone("Africa/Cairo"));
         return sdf.format(new Date());
     }
 
@@ -241,7 +239,6 @@ public class ViewCommentsFragment extends Fragment {
             setupWidgets();
         }
 
-
         myRef.child(mContext.getString(R.string.dbname_photos))
                 .child(mPhoto.getPhoto_id())
                 .child(mContext.getString(R.string.field_comments))
@@ -269,7 +266,6 @@ public class ViewCommentsFragment extends Fragment {
                                     photo.setDate_created(objectMap.get(mContext.getString(R.string.field_date_created)).toString());
                                     photo.setImage_path(objectMap.get(mContext.getString(R.string.field_image_path)).toString());
 
-
                                     mComments.clear();
                                     Comment firstComment = new Comment();
                                     firstComment.setComment(mPhoto.getCaption());
@@ -278,7 +274,7 @@ public class ViewCommentsFragment extends Fragment {
                                     mComments.add(firstComment);
 
                                     for (DataSnapshot dSnapshot : singleSnapshot
-                                           .child(mContext.getString(R.string.field_comments)).getChildren()){
+                                            .child(mContext.getString(R.string.field_comments)).getChildren()){
                                         Comment comment = new Comment();
                                         comment.setUser_id(dSnapshot.getValue(Comment.class).getUser_id());
                                         comment.setComment(dSnapshot.getValue(Comment.class).getComment());
@@ -290,51 +286,49 @@ public class ViewCommentsFragment extends Fragment {
 
                                     mPhoto = photo;
 
-                                   setupWidgets();
-//                    List<Like> likesList = new ArrayList<Like>();
-//                    for (DataSnapshot dSnapshot : singleSnapshot
-//                            .child(getString(R.string.field_likes)).getChildren()){
-//                        Like like = new Like();
-//                        like.setUser_id(dSnapshot.getValue(Like.class).getUser_id());
-//                        likesList.add(like);
-//                    }
+                                    setupWidgets();
 
-                                       }
+                    List<Like> likesList = new ArrayList<Like>();
+                    for (DataSnapshot dSnapshot : singleSnapshot
+                            .child(getString(R.string.field_likes)).getChildren()){
+                        Like like = new Like();
+                        like.setUser_id(dSnapshot.getValue(Like.class).getUser_id());
+                        likesList.add(like);
+                    }
 
-                                   }
+                                }
 
-                                   @Override
-                                   public void onCancelled(DatabaseError databaseError) {
-                                       Log.d(TAG, "onCancelled: query cancelled.");
-                                   }
-                               });
-                           }
+                            }
 
-                           @Override
-                           public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.d(TAG, "onCancelled: query cancelled.");
+                            }
+                        });
+                    }
 
-                           }
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-                           @Override
-                           public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    }
 
-                           }
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-                           @Override
-                           public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    }
 
-                           }
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-                           @Override
-                           public void onCancelled(DatabaseError databaseError) {
+                    }
 
-                           }
-                       });
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-
+                    }
+                });
 
     }
-
 
     @Override
     public void onStart() {
@@ -351,24 +345,3 @@ public class ViewCommentsFragment extends Fragment {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
