@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ListView;
 
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.Utils.BottomNavigationViewHelper;
@@ -17,15 +19,31 @@ public class LikesActivity extends AppCompatActivity {
     private static final int ACTIVITY_NUM = 3;
     private Context mContext = LikesActivity.this;
 
+    //widgets
+    private ListView mListView;
+
+//    private List<Notify> mLikesList;
+//    private LikesListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_notification);
+        mListView = (ListView) findViewById(R.id.listView);
         Log.d(TAG, "onCreate:Started");
+
         setUpBottomNav();
 
     }
+
+
+    private void hideSoftKeyboard(){
+        if(getCurrentFocus() != null){
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
     public void setUpBottomNav(){
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavViewBar);
         BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
