@@ -112,7 +112,7 @@ public class ViewPostFragment extends Fragment {
 
 
         try{
-            //mPhoto = getPhotoFromBundle();
+            mPhoto = getPhotoFromBundle();
             UniversalImageLoader.setImage(getPhotoFromBundle().getImage_path(), mPostImage, null, "");
             mActivityNumber = getActivityNumFromBundle();
 
@@ -161,6 +161,7 @@ public class ViewPostFragment extends Fragment {
                     Log.d(TAG, "onCancelled: query cancelled.");
                 }
             });
+
 
         }catch (NullPointerException e){
         }
@@ -454,8 +455,8 @@ public class ViewPostFragment extends Fragment {
         Log.d(TAG, "getPhotoDetails: retrieving photo details.");
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference
-                .child(getString(R.string.dbname_user_account_settings))
-                .orderByChild(getString(R.string.field_user_id))
+                .child(mContext.getString(R.string.dbname_user_account_settings))
+                .orderByChild(mContext.getString(R.string.field_user_id))
                 .equalTo(mPhoto.getUser_id());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -627,7 +628,6 @@ public class ViewPostFragment extends Fragment {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-
 
                 if (user != null) {
                     // User is signed in
