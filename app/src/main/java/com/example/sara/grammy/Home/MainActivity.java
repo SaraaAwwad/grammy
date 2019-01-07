@@ -64,8 +64,6 @@ public class MainActivity extends AppCompatActivity implements MainfeedListAdapt
         mFrameLayout = (FrameLayout) findViewById(R.id.container);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relLayoutParent);
 
-        Log.d(TAG, "new yarab 4");
-
         setupFirebaseAuth();
         initImageLoader();
         setUpBottomNav();
