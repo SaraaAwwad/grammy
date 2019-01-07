@@ -203,7 +203,9 @@ public class ProfileFragment extends Fragment {
                 ArrayList<String> imgUrls = new ArrayList<String>();
                 for(int i = 0; i<photos.size(); i++){
                     imgUrls.add(photos.get(i).getImage_path());
+                    //imgUrls.add(0,"");
                 }
+
                 GridImageAdapter adapter = new GridImageAdapter(getActivity(), R.layout.layout_grid_imageview,
                         "", imgUrls);
                 gridView.setAdapter(adapter);
@@ -311,6 +313,7 @@ public class ProfileFragment extends Fragment {
         mUsername.setText(settings.getUsername());
         mWebsite.setText(settings.getWebsite());
         mDescription.setText(settings.getDescription());
+
 //        mPosts.setText(String.valueOf(settings.getPosts()));
 //        mFollowing.setText(String.valueOf(settings.getFollowing()));
 //        mFollowers.setText(String.valueOf(settings.getFollowers()));
