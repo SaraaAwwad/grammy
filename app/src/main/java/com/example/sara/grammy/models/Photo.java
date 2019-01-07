@@ -110,6 +110,14 @@ public class Photo implements Parcelable {
         this.tags = tags;
     }
 
+    public List<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
+    }
+
     @Override
     public String toString() {
         return "Photo{" +
