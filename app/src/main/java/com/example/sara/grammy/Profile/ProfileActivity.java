@@ -18,8 +18,10 @@ import com.example.sara.grammy.models.Photo;
 
 
 public class ProfileActivity extends AppCompatActivity
-        implements ProfileFragment.OnGridImageSelectedListener ,
-        ViewPostFragment.OnCommentThreadSelectedListener{
+        implements
+        ProfileFragment.OnGridImageSelectedListener ,
+        ViewPostFragment.OnCommentThreadSelectedListener,
+        ViewProfileFragment.OnGridImageSelectedListener{
 
     private static final String TAG = "ProfileActivity";
 

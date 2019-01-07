@@ -19,7 +19,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.sara.grammy.Profile.AccountSettingsActivity;
@@ -46,11 +45,6 @@ import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-//import com.bumptech.glide.Glide;
-//import com.example.sara.grammy.models.Like;
-//import com.example.sara.grammy.models.Photo;
-//import com.example.sara.grammy.models.UserSettings;
 
 
 public class ViewProfileFragment extends Fragment {
@@ -115,16 +109,16 @@ public class ViewProfileFragment extends Fragment {
         try{
             mUser = getUserFromBundele();
             init();
+
         }catch(NullPointerException e){
             Log.e(TAG, "onCreateView: NullPointerException: " + e.getMessage());
             Toast.makeText(mContext, "something went wrong", Toast.LENGTH_SHORT).show();
             getActivity().getSupportFragmentManager().popBackStack();
         }
 
+        setupFirebaseAuth();
         setUpBottomNav();
         setupToolbar();
-        setupFirebaseAuth();
-        //setupGridView();
 
 //        TextView editProfile = view.findViewById(R.id.textEditProfile);
 //        editProfile.setOnClickListener(new View.OnClickListener() {
@@ -143,8 +137,8 @@ public class ViewProfileFragment extends Fragment {
     private void init(){
         //set the profile widgets
         DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference();
-        Query query1 = reference1.child(getString(R.string.dbname_user_account_settings))
-                .orderByChild(getString(R.string.field_user_id)).equalTo(mUser.getUser_id());
+        Query query1 = reference1.child(mContext.getString(R.string.dbname_user_account_settings))
+                .orderByChild(mContext.getString(R.string.field_user_id)).equalTo(mUser.getUser_id());
         query1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -167,7 +161,7 @@ public class ViewProfileFragment extends Fragment {
 
         DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference();
         Query query2 = reference2
-                .child(getString(R.string.dbname_user_photos))
+                .child(mContext.getString(R.string.dbname_user_photos))
                 .child(mUser.getUser_id());
         query2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -178,12 +172,12 @@ public class ViewProfileFragment extends Fragment {
                     Map<String, Object> objectMap = (HashMap<String, Object>) singleSnapshot.getValue();
 
                     try {
-                        photo.setCaption(objectMap.get(getString(R.string.field_caption)).toString());
-                        photo.setTags(objectMap.get(getString(R.string.field_tags)).toString());
-                        photo.setPhoto_id(objectMap.get(getString(R.string.field_photo_id)).toString());
-                        photo.setUser_id(objectMap.get(getString(R.string.field_user_id)).toString());
-                        photo.setDate_created(objectMap.get(getString(R.string.field_date_created)).toString());
-                        photo.setImage_path(objectMap.get(getString(R.string.field_image_path)).toString());
+                        photo.setCaption(objectMap.get(mContext.getString(R.string.field_caption)).toString());
+                        photo.setTags(objectMap.get(mContext.getString(R.string.field_tags)).toString());
+                        photo.setPhoto_id(objectMap.get(mContext.getString(R.string.field_photo_id)).toString());
+                        photo.setUser_id(objectMap.get(mContext.getString(R.string.field_user_id)).toString());
+                        photo.setDate_created(objectMap.get(mContext.getString(R.string.field_date_created)).toString());
+                        photo.setImage_path(objectMap.get(mContext.getString(R.string.field_image_path)).toString());
 
                         ArrayList<Comment> comments = new ArrayList<Comment>();
                         for (DataSnapshot dSnapshot : singleSnapshot
@@ -199,7 +193,7 @@ public class ViewProfileFragment extends Fragment {
 
                         List<Like> likesList = new ArrayList<Like>();
                         for (DataSnapshot dSnapshot : singleSnapshot
-                                .child(getString(R.string.field_likes)).getChildren()) {
+                                .child(mContext.getString(R.string.field_likes)).getChildren()) {
                             Like like = new Like();
                             like.setUser_id(dSnapshot.getValue(Like.class).getUser_id());
                             likesList.add(like);
@@ -250,7 +244,7 @@ public class ViewProfileFragment extends Fragment {
 
         Bundle bundle = this.getArguments();
         if(bundle != null){
-            return bundle.getParcelable(getString(R.string.intent_user));
+            return bundle.getParcelable(mContext.getString(R.string.intent_user));
         }else{
             return null;
         }
@@ -308,7 +302,7 @@ public class ViewProfileFragment extends Fragment {
         });
     }
 
-        public void setUpBottomNav() {
+    public void setUpBottomNav() {
         BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
         BottomNavigationViewHelper.enableNav(mContext, getActivity(),bottomNavigationView);
 

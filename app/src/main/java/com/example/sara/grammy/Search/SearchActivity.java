@@ -53,13 +53,17 @@ public class SearchActivity extends AppCompatActivity {
         mSearchParam = (EditText) findViewById(R.id.search);
         mListView = (ListView) findViewById(R.id.listView);
 
-        hideSoftKeyboard();
+        //hideSoftKeyboard();
         setUpBottomNav();
         initTextListener();
 
     }
 
+
+
     private void initTextListener(){
+        Log.d(TAG, "initTextListener: initializing");
+
         mUserList = new ArrayList<>();
 
         mSearchParam.addTextChangedListener(new TextWatcher() {
@@ -75,11 +79,13 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 String text = mSearchParam.getText().toString().toLowerCase(Locale.getDefault());
                 searchForMatch(text);
             }
         });
     }
+
 
 
     private void searchForMatch(String keyword){
