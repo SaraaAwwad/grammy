@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.sara.grammy.Home.MainActivity;
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.models.Comment;
+import com.example.sara.grammy.models.Like;
 import com.example.sara.grammy.models.Photo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
@@ -272,7 +274,7 @@ public class ViewCommentsFragment extends Fragment {
                                     mComments.add(firstComment);
 
                                     for (DataSnapshot dSnapshot : singleSnapshot
-                                           .child(mContext.getString(R.string.field_comments)).getChildren()){
+                                            .child(mContext.getString(R.string.field_comments)).getChildren()){
                                         Comment comment = new Comment();
                                         comment.setUser_id(dSnapshot.getValue(Comment.class).getUser_id());
                                         comment.setComment(dSnapshot.getValue(Comment.class).getComment());
@@ -284,47 +286,47 @@ public class ViewCommentsFragment extends Fragment {
 
                                     mPhoto = photo;
 
-                                   setupWidgets();
+                                    setupWidgets();
 
-//                    List<Like> likesList = new ArrayList<Like>();
-//                    for (DataSnapshot dSnapshot : singleSnapshot
-//                            .child(getString(R.string.field_likes)).getChildren()){
-//                        Like like = new Like();
-//                        like.setUser_id(dSnapshot.getValue(Like.class).getUser_id());
-//                        likesList.add(like);
-//                    }
+                    List<Like> likesList = new ArrayList<Like>();
+                    for (DataSnapshot dSnapshot : singleSnapshot
+                            .child(getString(R.string.field_likes)).getChildren()){
+                        Like like = new Like();
+                        like.setUser_id(dSnapshot.getValue(Like.class).getUser_id());
+                        likesList.add(like);
+                    }
 
-                                       }
+                                }
 
-                                   }
+                            }
 
-                                   @Override
-                                   public void onCancelled(DatabaseError databaseError) {
-                                       Log.d(TAG, "onCancelled: query cancelled.");
-                                   }
-                               });
-                           }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.d(TAG, "onCancelled: query cancelled.");
+                            }
+                        });
+                    }
 
-                           @Override
-                           public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-                           }
+                    }
 
-                           @Override
-                           public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-                           }
+                    }
 
-                           @Override
-                           public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-                           }
+                    }
 
-                           @Override
-                           public void onCancelled(DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-                           }
-                       });
+                    }
+                });
 
     }
 
@@ -343,24 +345,3 @@ public class ViewCommentsFragment extends Fragment {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

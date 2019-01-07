@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -20,6 +21,8 @@ import com.example.sara.grammy.R;
 import com.example.sara.grammy.Utils.BottomNavigationViewHelper;
 import com.example.sara.grammy.Utils.SectionsPagerAdapter;
 import com.example.sara.grammy.Utils.UniversalImageLoader;
+import com.example.sara.grammy.Utils.ViewCommentsFragment;
+import com.example.sara.grammy.models.Photo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -44,11 +47,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         mViewPager = (ViewPager) findViewById(R.id.viewpager_container);
         mFrameLayout = (FrameLayout) findViewById(R.id.container);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relLayoutParent);
 
-        Log.d(TAG, "new xcamerashare");
+        Log.d(TAG, "new merge6");
+
         setupFirebaseAuth();
         initImageLoader();
         setUpBottomNav();
@@ -80,6 +85,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void onCommentThreadSelected(Photo photo, String callingActivity){
+        Log.d(TAG, "onCommentThreadSelected: selected a coemment thread");
+
+        ViewCommentsFragment fragment  = new ViewCommentsFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(getString(R.string.photo), photo);
+        args.putString(getString(R.string.home_activity), getString(R.string.home_activity));
+        fragment.setArguments(args);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        transaction.addToBackStack(getString(R.string.view_comments_fragment));
+        transaction.commit();
+
+    }
+
+
     public void hideLayout(){
         Log.d(TAG, "hideLayout: hiding layout");
         mRelativeLayout.setVisibility(View.GONE);
@@ -91,6 +113,16 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "hideLayout: showing layout");
         mRelativeLayout.setVisibility(View.VISIBLE);
         mFrameLayout.setVisibility(View.GONE);
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(mFrameLayout.getVisibility() == View.VISIBLE){
+            showLayout();
+        }
     }
 
 

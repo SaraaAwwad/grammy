@@ -187,10 +187,10 @@ public class ProfileFragment extends Fragment {
                     }catch(NullPointerException e){
                         Log.e(TAG, "onDataChange: NullPointerException: " + e.getMessage() );
                     }
-
                 }
                 //setting up image grid
                 int gridWidth = getResources().getDisplayMetrics().widthPixels;
+
                 int imageWidth = gridWidth/NUM_GRID_COLUMNS;
                 gridView.setColumnWidth(imageWidth);
 
