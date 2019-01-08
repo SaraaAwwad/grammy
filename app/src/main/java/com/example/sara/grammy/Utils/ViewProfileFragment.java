@@ -7,7 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,7 +84,7 @@ public class ViewProfileFragment extends Fragment {
     private BottomNavigationView bottomNavigationView;
     private Context mContext;
     private TextView editProfile;
-
+   // private RelativeLayout parentLay;
 
     //vars
     private int mFollowersCount = 0;
@@ -109,6 +112,7 @@ public class ViewProfileFragment extends Fragment {
         mUnfollow = (TextView) view.findViewById(R.id.unfollow);
         editProfile = (TextView) view.findViewById(R.id.textEditProfile);
         mBackArrow = (ImageView) view.findViewById(R.id.backArrow);
+     //   parentLay = (RelativeLayout)view.findViewById(R.id.relLayout2);
         mContext = getActivity();
 
 
@@ -158,6 +162,7 @@ public class ViewProfileFragment extends Fragment {
             }
         });
 
+
         mUnfollow.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -184,6 +189,49 @@ public class ViewProfileFragment extends Fragment {
 
             }
         });
+
+        mFollowing.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+
+                Log.d(TAG, "init: inflating viewfollowers");
+
+                ViewFollowersFragment fragment = new ViewFollowersFragment();
+                Bundle args = new Bundle();
+                args.putString(getString(R.string.intent_user), mUser.getUser_id());
+                args.putString(getString(R.string.dbname_following), R.string.dbname_following+"");
+                fragment.setArguments(args);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, fragment);
+                transaction.addToBackStack(getString(R.string.view_profile_fragment));
+                transaction.commit();
+                //R.layout.fragment_view_profile
+            }
+        });
+
+        mFollowers.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+
+                Log.d(TAG, "init: inflating viewfollowers");
+
+                ViewFollowersFragment fragment = new ViewFollowersFragment();
+                Bundle args = new Bundle();
+                args.putString(getString(R.string.intent_user), mUser.getUser_id());
+                args.putString(getString(R.string.dbname_followers), R.string.dbname_followers+"");
+
+                fragment.setArguments(args);
+
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, fragment);
+                transaction.addToBackStack(getString(R.string.view_profile_fragment));
+                transaction.commit();
+                //R.layout.fragment_view_profile
+            }
+        });
+
 
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
