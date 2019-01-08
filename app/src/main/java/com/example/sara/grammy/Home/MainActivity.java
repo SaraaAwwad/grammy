@@ -2,11 +2,13 @@ package com.example.sara.grammy.Home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import android.widget.RelativeLayout;
 
 import com.example.sara.grammy.Login.LoginActivity;
 import com.example.sara.grammy.R;
+import com.example.sara.grammy.Share.ShareActivity;
 import com.example.sara.grammy.Utils.BottomNavigationViewHelper;
 import com.example.sara.grammy.Utils.MainfeedListAdapter;
 import com.example.sara.grammy.Utils.SectionsPagerAdapter;
@@ -66,8 +69,7 @@ public class MainActivity extends AppCompatActivity implements MainfeedListAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d(TAG, "new fixing 2 ");
-
+        Log.d(TAG, "new fixing ");
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager_container);
         mFrameLayout = (FrameLayout) findViewById(R.id.container);
@@ -79,6 +81,9 @@ public class MainActivity extends AppCompatActivity implements MainfeedListAdapt
         setupViewPager();
     }
 
+    public int getCurrentTabNumber(){
+        return  mViewPager.getCurrentItem();
+    }
 
     private void initImageLoader(){
         UniversalImageLoader universalImageLoader = new UniversalImageLoader(mContext);
@@ -209,5 +214,36 @@ public class MainActivity extends AppCompatActivity implements MainfeedListAdapt
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
+
+
+    /*
+     * check an array of permisisons*/
+
+    public boolean checkPermissionsArray(String[] permissions){
+        Log.d(TAG, "checkPermissionsArray: checking permissions array.");
+
+        for (int i = 0; i < permissions.length; i++){
+            String check = permissions[i];
+            if (!checkPermissions(check)){
+                return false;
+            }
+        }
+        return true;
+    }
+    /*
+     * check a single permission has been verified*/
+    public boolean checkPermissions(String permission){
+        Log.d(TAG, "checkPermissions: checking permission: " + permission);
+
+        int permissionRequest = ActivityCompat.checkSelfPermission(MainActivity.this, permission);
+        if (permissionRequest != PackageManager.PERMISSION_GRANTED){
+            Log.d(TAG, "checkPermissions: \n Permission was not granted for: " + permission);
+            return false;
+        }else{
+            Log.d(TAG, "checkPermissions: \n Permission was granted for: " + permission);
+            return true;
+        }
+    }
+
 
 }
