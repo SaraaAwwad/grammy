@@ -41,6 +41,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -189,6 +190,9 @@ public class ProfileFragment extends Fragment {
                         Log.e(TAG, "onDataChange: NullPointerException: " + e.getMessage() );
                     }
                 }
+              //  Collections.sort(photos, Collections.reverseOrder());
+                Collections.reverse(photos);
+              //  setupImageGrid(photos);
                 //setting up image grid
                 int gridWidth = getResources().getDisplayMetrics().widthPixels;
 
@@ -197,8 +201,8 @@ public class ProfileFragment extends Fragment {
 
                 ArrayList<String> imgUrls = new ArrayList<String>();
                 for(int i = 0; i<photos.size(); i++){
-                  //  imgUrls.add(photos.get(i).getImage_path());
-                    imgUrls.add(0,photos.get(i).getImage_path());
+                    imgUrls.add(photos.get(i).getImage_path());
+                //    imgUrls.add(0,photos.get(i).getImage_path());
                 }
 
                 GridImageAdapter adapter = new GridImageAdapter(getActivity(), R.layout.layout_grid_imageview,
@@ -361,9 +365,6 @@ public class ProfileFragment extends Fragment {
 
                 //retrieve user information from database
                 setProfileWidgets(mFirebaseMethods.getUserSettings(dataSnapshot));
-
-                //retrieve images for the user in question
-
             }
 
             @Override
