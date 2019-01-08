@@ -63,6 +63,7 @@ public class HomeFragment extends android.support.v4.app.Fragment{
         Query query = reference
                 .child(getString(R.string.dbname_following))
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -74,6 +75,8 @@ public class HomeFragment extends android.support.v4.app.Fragment{
                 }
 
                 mFollowing.add(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+
                 //get the photos
                 getPhotos();
             }
@@ -88,13 +91,17 @@ public class HomeFragment extends android.support.v4.app.Fragment{
     private void getPhotos(){
         Log.d(TAG, "getPhotos: getting photos");
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
         for(int i = 0; i < mFollowing.size(); i++){
+
             final int count = i;
+
             Query query = reference
                     .child(getString(R.string.dbname_user_photos))
                     .child(mFollowing.get(i))
                     .orderByChild(getString(R.string.field_user_id))
                     .equalTo(mFollowing.get(i));
+
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -161,9 +168,10 @@ public class HomeFragment extends android.support.v4.app.Fragment{
                     mPaginatedPhotos.add(mPhotos.get(i));
                 }
 
+                Log.d(TAG, "Photos: "+mPaginatedPhotos);
                 mAdapter = new MainfeedListAdapter(getActivity(), R.layout.layout_mainfeed_listitem, mPaginatedPhotos);
                 mListView.setAdapter(mAdapter);
-
+               // mAdapter.notifyDataSetChanged();
 
             }catch(NullPointerException e){
                 Log.e(TAG, "displayPhotos: NullPointerException" + e.getMessage());
