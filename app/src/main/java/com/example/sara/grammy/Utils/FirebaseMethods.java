@@ -86,9 +86,16 @@ public class FirebaseMethods {
 
         final String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+        //newplace
+        final String newPhotoKey = myRef.child(mContext.getString(R.string.dbname_photos)).push().getKey();
+
         if(photoType.equals(mContext.getString(R.string.new_photo))){
+
             Log.d(TAG, "Uploading new photo");
-            StorageReference storageReference = mStorageReference.child( filePaths.FIREBASE_IMAGE_STORAGE + "/"+ user_id + "/photo" + (imageCount+1) );
+            //newplace
+            StorageReference storageReference = mStorageReference.child( filePaths.FIREBASE_IMAGE_STORAGE + "/"+ user_id + "/" + newPhotoKey );
+
+//            StorageReference storageReference = mStorageReference.child( filePaths.FIREBASE_IMAGE_STORAGE + "/"+ user_id + "/photo" + (imageCount+1) );
 
             //convert uri to bitmap
             if(bm == null){
@@ -104,13 +111,15 @@ public class FirebaseMethods {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     FilePaths filePaths = new FilePaths();
-                    mStorageReference.child( filePaths.FIREBASE_IMAGE_STORAGE + "/"+ user_id + "/photo" + (imageCount+1))
+                    mStorageReference.child( filePaths.FIREBASE_IMAGE_STORAGE + "/"+ user_id + "/" + newPhotoKey)
                             .getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                         @Override
                         public void onComplete(@NonNull Task<Uri> task) {
+
+//                            mStorageReference.child( filePaths.FIREBASE_IMAGE_STORAGE + "/"+ user_id + "/photo" + (imageCount+1))
                             //getdownloadUrl
                             //add the new photo to 'photos' node and 'user_photos' node
-                            addPhotoToDatabase(caption, task.getResult().toString());
+                            addPhotoToDatabase(newPhotoKey, caption, task.getResult().toString());
                         }
                     });
 
@@ -234,9 +243,10 @@ public class FirebaseMethods {
                 .setValue(url);
     }
 
-    private void addPhotoToDatabase(String caption, String url) {
+    private void addPhotoToDatabase(String newPhotoKey, String caption, String url) {
 
-        String newPhotoKey = myRef.child(mContext.getString(R.string.dbname_photos)).push().getKey();
+       // String newPhotoKey = myRef.child(mContext.getString(R.string.dbname_photos)).push().getKey();
+
         String tags = StringManipulation.getTags(caption);
 
         Photo photo = new Photo();
@@ -251,7 +261,9 @@ public class FirebaseMethods {
         myRef.child(mContext.getString(R.string.dbname_user_photos))
                 .child(FirebaseAuth.getInstance().getCurrentUser()
                         .getUid()).child(newPhotoKey).setValue(photo);
+
         myRef.child(mContext.getString(R.string.dbname_photos)).child(newPhotoKey).setValue(photo);
+
 
     }
 

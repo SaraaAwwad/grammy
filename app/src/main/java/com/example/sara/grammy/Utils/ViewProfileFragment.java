@@ -440,14 +440,9 @@ public class ViewProfileFragment extends Fragment {
 
     private void setProfileWidgets(UserSettings userSettings) {
 
-        //User user = userSettings.getUser();
         UserAccountSettings settings = userSettings.getSettings();
 
         UniversalImageLoader.setImage(settings.getProfile_photo(), mProfilePhoto, null, "");
-
-//        Glide.with(getActivity())
-//                .load(settings.getProfile_photo())
-//                .into(mProfilePhoto);
 
         mDisplayName.setText(settings.getDisplay_name());
         mUsername.setText(settings.getUsername());
@@ -466,8 +461,8 @@ public class ViewProfileFragment extends Fragment {
                 getActivity().getSupportFragmentManager().popBackStack();
                 getActivity().finish();
 
-//                if(getCallingActivityFromBundle().equals(getString(R.string.home_activity))){
-//                    getActivity().getSupportFragmentManager().popBackStack();
+////                if(getCallingActivityFromBundle().equals(getString(R.string.home_activity))){
+////                    getActivity().getSupportFragmentManager().popBackStack();
 //                    ((MainActivity)getActivity()).showLayout();
 //                }else{
 //                    getActivity().getSupportFragmentManager().popBackStack();

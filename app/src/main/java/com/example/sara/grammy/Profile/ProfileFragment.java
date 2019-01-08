@@ -202,7 +202,7 @@ public class ProfileFragment extends Fragment {
                 ArrayList<String> imgUrls = new ArrayList<String>();
                 for(int i = 0; i<photos.size(); i++){
                     imgUrls.add(photos.get(i).getImage_path());
-                //    imgUrls.add(0,photos.get(i).getImage_path());
+                //  imgUrls.add(0,photos.get(i).getImage_path());
                 }
 
                 GridImageAdapter adapter = new GridImageAdapter(getActivity(), R.layout.layout_grid_imageview,
