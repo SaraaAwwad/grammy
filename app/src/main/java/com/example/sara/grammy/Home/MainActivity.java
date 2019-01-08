@@ -3,6 +3,7 @@ package com.example.sara.grammy.Home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
@@ -19,18 +20,30 @@ import android.widget.RelativeLayout;
 import com.example.sara.grammy.Login.LoginActivity;
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.Utils.BottomNavigationViewHelper;
+import com.example.sara.grammy.Utils.MainfeedListAdapter;
 import com.example.sara.grammy.Utils.SectionsPagerAdapter;
 import com.example.sara.grammy.Utils.UniversalImageLoader;
 import com.example.sara.grammy.Utils.ViewCommentsFragment;
 import com.example.sara.grammy.models.Photo;
+import com.example.sara.grammy.models.UserAccountSettings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainfeedListAdapter.OnLoadMoreItemsListener{
+
+    @Override
+    public void onLoadMoreItems() {
+        HomeFragment fragment = (HomeFragment) getSupportFragmentManager()
+                .findFragmentByTag("android:switcher"+R.id.viewpager_container + ":" + mViewPager.getCurrentItem());
+     if(fragment != null){
+         fragment.displayMorePhotos();
+     }
+    }
 
     private static final String TAG ="MainActivity" ;
     private static final int ACTIVITY_NUM = 0;
+    private static final int HOME_FRAGMENT = 1;
     private Context mContext = MainActivity.this;
 
     //firebase
@@ -47,19 +60,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         mViewPager = (ViewPager) findViewById(R.id.viewpager_container);
         mFrameLayout = (FrameLayout) findViewById(R.id.container);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relLayoutParent);
-
-        Log.d(TAG, "new merge6");
 
         setupFirebaseAuth();
         initImageLoader();
         setUpBottomNav();
         setupViewPager();
-
     }
+
 
     private void initImageLoader(){
         UniversalImageLoader universalImageLoader = new UniversalImageLoader(mContext);
@@ -91,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         ViewCommentsFragment fragment  = new ViewCommentsFragment();
         Bundle args = new Bundle();
         args.putParcelable(getString(R.string.photo), photo);
-        args.putString(getString(R.string.home_activity), getString(R.string.home_activity));
+        args.putString(getString(R.string.home_activity),getString(R.string.home_activity) );
         fragment.setArguments(args);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -110,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void showLayout(){
-        Log.d(TAG, "hideLayout: showing layout");
+        Log.d(TAG, "showLayout: showing layout");
         mRelativeLayout.setVisibility(View.VISIBLE);
         mFrameLayout.setVisibility(View.GONE);
     }
@@ -177,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
-        //mViewPager.setCurrentItem(HOME_FRAGMENT);
+        mViewPager.setCurrentItem(HOME_FRAGMENT);
         FirebaseUser currentUser = mAuth.getCurrentUser();
         checkCurrentUser(currentUser);
     }
@@ -189,14 +199,5 @@ public class MainActivity extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-
-
-
-
-
-
-
-
-
 
 }

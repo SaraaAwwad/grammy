@@ -88,6 +88,12 @@ public class ViewCommentsFragment extends Fragment {
         return view;
     }
 
+    protected void onPostExecute(Void result){
+        if(isAdded()){
+            getResources().getString(R.string.app_name);
+        }
+    }
+
     private void setupWidgets(){
 
         CommentListAdapter adapter = new CommentListAdapter(mContext,
@@ -286,15 +292,15 @@ public class ViewCommentsFragment extends Fragment {
 
                                     mPhoto = photo;
 
-                                    setupWidgets();
 
-                    List<Like> likesList = new ArrayList<Like>();
-                    for (DataSnapshot dSnapshot : singleSnapshot
-                            .child(getString(R.string.field_likes)).getChildren()){
-                        Like like = new Like();
-                        like.setUser_id(dSnapshot.getValue(Like.class).getUser_id());
-                        likesList.add(like);
-                    }
+//                    List<Like> likesList = new ArrayList<Like>();
+//                    for (DataSnapshot dSnapshot : singleSnapshot
+//                            .child(getString(R.string.field_likes)).getChildren()){
+//                        Like like = new Like();
+//                        like.setUser_id(dSnapshot.getValue(Like.class).getUser_id());
+//                        likesList.add(like);
+//                    }
+                                    setupWidgets();
 
                                 }
 
