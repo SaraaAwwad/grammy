@@ -20,8 +20,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/relLayout1"
         android:layout_toRightOf="@+id/likes_notify_image"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/grey_border_bottom">
+        android:layout_marginTop="15dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -43,13 +42,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="liked your picture"
+                android:text="liked your picture."
                 android:layout_marginLeft="5dp"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:layout_toRightOf="@+id/likes_notify_username"
-                android:id="@+id/likes_notify"/>
-
+                android:id="@+id/notification_notify"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -57,13 +55,23 @@
                 android:text="3 d"
                 android:textColor="@color/grey"
                 android:textSize="14sp"
-                android:id="@+id/likes_notify_time_posted"
+                android:id="@+id/notify_time_posted"
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="15dp"
-                android:layout_below="@+id/likes_notify"/>
-
+                android:layout_below="@+id/likes_notify_username"/>
 
         </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/image_liked"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_grammy" />
 
     </RelativeLayout>
 

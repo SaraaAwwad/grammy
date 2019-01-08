@@ -1,17 +1,16 @@
 package com.example.sara.grammy.Likes;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ListView;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
+import com.example.sara.grammy.Home.MainActivity;
 import com.example.sara.grammy.R;
-import com.example.sara.grammy.Utils.BottomNavigationViewHelper;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class LikesActivity extends AppCompatActivity {
@@ -19,38 +18,35 @@ public class LikesActivity extends AppCompatActivity {
     private static final int ACTIVITY_NUM = 3;
     private Context mContext = LikesActivity.this;
 
-    //widgets
-    private ListView mListView;
+    //firebase
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
-//    private List<Notify> mLikesList;
-//    private LikesListAdapter mAdapter;
+    //widgets
+    private FrameLayout mFrameLayout;
+    private RelativeLayout mRelativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
-        mListView = (ListView) findViewById(R.id.listView);
-        Log.d(TAG, "onCreate:Started");
 
-        setUpBottomNav();
+        LikesFragment fragment = new LikesFragment();
+        android.support.v4.app.FragmentTransaction transaction = LikesActivity.this.getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container,fragment);
+        transaction.addToBackStack(getString(R.string.notification_fragment));
+        transaction.commit();
+
+        Log.d(TAG, "onCreate:Started");;
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
 
-    private void hideSoftKeyboard(){
-        if(getCurrentFocus() != null){
-            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        }
+        Intent intent = new Intent(mContext, MainActivity.class);
+        mContext.startActivity(intent);
     }
 
-    public void setUpBottomNav(){
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavViewBar);
-        BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
-        Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
-        BottomNavigationViewHelper.enableNav(mContext, this,bottomNavigationView);
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
-        menuItem.setChecked(true);
-    }
 }

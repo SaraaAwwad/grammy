@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.example.sara.grammy.Home.MainActivity;
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.models.Comment;
-import com.example.sara.grammy.models.Like;
 import com.example.sara.grammy.models.Photo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,7 +34,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
@@ -292,14 +290,6 @@ public class ViewCommentsFragment extends Fragment {
 
                                     mPhoto = photo;
 
-
-//                    List<Like> likesList = new ArrayList<Like>();
-//                    for (DataSnapshot dSnapshot : singleSnapshot
-//                            .child(getString(R.string.field_likes)).getChildren()){
-//                        Like like = new Like();
-//                        like.setUser_id(dSnapshot.getValue(Like.class).getUser_id());
-//                        likesList.add(like);
-//                    }
                                     setupWidgets();
 
                                 }
