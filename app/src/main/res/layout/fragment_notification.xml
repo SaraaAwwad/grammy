@@ -17,13 +17,15 @@
         </RelativeLayout>
 
 
-        <ListView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/listView"
-            android:layout_below="@+id/relLayout1">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relLayout1"
+            android:id="@+id/relLayout2">
 
-        </ListView>
+            <include layout="@layout/layout_center_notification"/>
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

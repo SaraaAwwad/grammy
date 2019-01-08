@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LikesFragment extends Fragment {
@@ -185,6 +186,7 @@ public class LikesFragment extends Fragment {
                             mNotifications.add(notify);
                         }
 
+                        Collections.sort(mNotifications, Collections.reverseOrder());
                     }
                     catch (Exception e){
                         Log.d("error",e.toString());
