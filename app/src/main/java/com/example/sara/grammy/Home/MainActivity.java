@@ -35,11 +35,16 @@ public class MainActivity extends AppCompatActivity implements MainfeedListAdapt
     @Override
     public void onLoadMoreItems() {
         Log.d(TAG, "onLoadMoreItems");
-        HomeFragment fragment = (HomeFragment) getSupportFragmentManager()
-                .findFragmentByTag("android:switcher"+R.id.viewpager_container + ":" + mViewPager.getCurrentItem());
+        HomeFragment fragment = (HomeFragment) getSupportFragmentManager().
+                findFragmentByTag("android:switcher:" + R.id.viewpager_container + ":" + mViewPager.getCurrentItem());
+
 
      if(fragment != null){
+         Log.d(TAG, "onLoadMoreItems: Not equal null");
          fragment.displayMorePhotos();
+     }else{
+         Log.d(TAG, "onLoadMoreItems: Fragment equals null");
+
      }
     }
 
