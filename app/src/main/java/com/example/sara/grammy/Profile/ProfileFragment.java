@@ -47,11 +47,6 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-//import com.bumptech.glide.Glide;
-//import com.example.sara.grammy.models.Like;
-//import com.example.sara.grammy.models.Photo;
-//import com.example.sara.grammy.models.UserSettings;
-
 
 public class ProfileFragment extends Fragment {
 
@@ -305,18 +300,10 @@ public class ProfileFragment extends Fragment {
 
         UniversalImageLoader.setImage(settings.getProfile_photo(), mProfilePhoto, null, "");
 
-//        Glide.with(getActivity())
-//                .load(settings.getProfile_photo())
-//                .into(mProfilePhoto);
-
         mDisplayName.setText(settings.getDisplay_name());
         mUsername.setText(settings.getUsername());
         mWebsite.setText(settings.getWebsite());
         mDescription.setText(settings.getDescription());
-
-//        mPosts.setText(String.valueOf(settings.getPosts()));
-//        mFollowing.setText(String.valueOf(settings.getFollowing()));
-//        mFollowers.setText(String.valueOf(settings.getFollowers()));
 
         mProgressBar.setVisibility(View.GONE);
     }
@@ -391,7 +378,6 @@ public class ProfileFragment extends Fragment {
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
-        //mViewPager.setCurrentItem(HOME_FRAGMENT);
         FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 

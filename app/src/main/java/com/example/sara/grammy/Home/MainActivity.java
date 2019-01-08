@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements MainfeedListAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.d(TAG, "new fixing 2");
+
         mViewPager = (ViewPager) findViewById(R.id.viewpager_container);
         mFrameLayout = (FrameLayout) findViewById(R.id.container);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relLayoutParent);
@@ -133,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements MainfeedListAdapt
         if(mFrameLayout.getVisibility() == View.VISIBLE){
             showLayout();
         }
+
     }
 
 

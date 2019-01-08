@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sara.grammy.Home.MainActivity;
 import com.example.sara.grammy.Profile.AccountSettingsActivity;
 import com.example.sara.grammy.Profile.ProfileActivity;
 import com.example.sara.grammy.R;
@@ -458,14 +459,30 @@ public class ViewProfileFragment extends Fragment {
         mBackArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: nacigating back");
+                Log.d(TAG, "onClick: navigating back");
                 getActivity().getSupportFragmentManager().popBackStack();
                 getActivity().finish();
+
+//                if(getCallingActivityFromBundle().equals(getString(R.string.home_activity))){
+//                    getActivity().getSupportFragmentManager().popBackStack();
+//                    ((MainActivity)getActivity()).showLayout();
+//                }else{
+//                    getActivity().getSupportFragmentManager().popBackStack();
+//                }
             }
         });
     }
 
+    private String getCallingActivityFromBundle(){
+        Log.d(TAG, "getPhotoFromBundle: arguments: " + getArguments());
 
+        Bundle bundle = this.getArguments();
+        if(bundle != null) {
+            return bundle.getString(getString(R.string.home_activity));
+        }else{
+            return null;
+        }
+    }
 
 //    private void setupToolbar(){
 //
