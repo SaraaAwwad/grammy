@@ -8,6 +8,9 @@
     <string name="view_profile_fragment">ViewProfile</string>
     <string name="view_comments_fragment">View Comments</string>
 
+    <!-- Descriptions -->
+    <string name="comments_descr">commented on your picture.</string>
+    <string name="likes_descr">liked your comment.</string>
 
     <!--Dialog Names -->
     <string name="confirm_password_dialog">ConfirmPasswordDialog</string>

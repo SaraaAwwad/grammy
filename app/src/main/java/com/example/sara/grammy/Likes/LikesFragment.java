@@ -54,7 +54,7 @@ public class LikesFragment extends Fragment {
 
     //vars
     private Photo mPhoto;
-    private ArrayList<Notification> mLikes;
+    private ArrayList<Notification> mNotifications;
     private Context mContext;
     List<Photo> Photos;
     List<Like> likesArray;
@@ -65,7 +65,7 @@ public class LikesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
 
         mListView = view.findViewById(R.id.listView);
-        mLikes = new ArrayList<>();
+        mNotifications = new ArrayList<>();
         bottomNavigationView = view.findViewById(R.id.bottomNavViewBar);
         mContext = getActivity();
 
@@ -84,7 +84,7 @@ public class LikesFragment extends Fragment {
     private void setupWidgets(){
 
         NotificationListAdapter adapter = new NotificationListAdapter(mContext,
-                R.layout.layout_notification, mLikes);
+                R.layout.layout_notification, mNotifications);
         mListView.setAdapter(adapter);
 
     }
@@ -157,41 +157,33 @@ public class LikesFragment extends Fragment {
             }
         };
 
-        Log.d(TAG, "onAuthStateChanged:signed_out" + myRef);
-        DatabaseReference user_photoRef = myRef.child("user_photos").child(mAuth.getCurrentUser().getUid());
-        Log.d(TAG, "onAuthStateChanged:signed_out" + user_photoRef);
+        DatabaseReference user_photoRef = myRef.child(mContext.getString(R.string.dbname_user_photos)).child(mAuth.getCurrentUser().getUid());
         Photos = new ArrayList<>();
         likesArray = new ArrayList<>();
         user_photoRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot childSnapshot : dataSnapshot.getChildren()){
-                    Log.d("Trial",childSnapshot.getValue() +"");
                     try {
-                        Log.d("test2 Trial2", childSnapshot.child("likes").child("user_id").getValue() + "");
 
-                    Log.d(TAG, "Trial Photos");
-
-
-                    for (DataSnapshot LL :childSnapshot.child("likes").getChildren()){
-
+                    for (DataSnapshot LL :childSnapshot.child(mContext.getString(R.string.field_likes)).getChildren()){
                         Notification notify = new Notification();
-                        notify.setUser_id(LL.child("user_id").getValue().toString());
-                        notify.setPhoto_id(childSnapshot.child("photo_id").getValue().toString());
-                        notify.setImage_path(childSnapshot.child("image_path").getValue().toString());
-                        Log.d(TAG,"Trial soso" + LL.child("user_id").getValue().toString());
-                        mLikes.add(notify);
-
-
+                        notify.setUser_id(LL.child(mContext.getString(R.string.field_user_id)).getValue().toString());
+                        notify.setPhoto_id(childSnapshot.child(mContext.getString(R.string.field_photo_id)).getValue().toString());
+                        notify.setImage_path(childSnapshot.child(mContext.getString(R.string.field_image_path)).getValue().toString());
+                        notify.setType("Like");
+                        mNotifications.add(notify);
                     }
 
-//                    Photo p = new Photo();
-//                    p.setLikes(likesArray);
-//                    p.setPhoto_id(childSnapshot.child("photo_id").getValue().toString());
-//                    p.setUser_id(mAuth.getCurrentUser().getUid());
-//
-//                    Log.d(TAG, "Trial Photo" + p.toString());
-//                    Photos.add(p);
+                        for (DataSnapshot LL :childSnapshot.child(mContext.getString(R.string.field_comments)).getChildren()){
+                            Notification notify = new Notification();
+                            notify.setUser_id(LL.child(mContext.getString(R.string.field_user_id)).getValue().toString());
+                            notify.setPhoto_id(childSnapshot.child(mContext.getString(R.string.field_photo_id)).getValue().toString());
+                            notify.setImage_path(childSnapshot.child(mContext.getString(R.string.field_image_path)).getValue().toString());
+                            notify.setDate_created(LL.child(mContext.getString(R.string.field_date_created)).getValue().toString());
+                            notify.setType("Comment");
+                            mNotifications.add(notify);
+                        }
 
                     }
                     catch (Exception e){
