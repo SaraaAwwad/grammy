@@ -65,8 +65,8 @@ public class ProfileActivity extends AppCompatActivity
     private Context mContext = ProfileActivity.this;
     private ImageView profilePhoto;
     private static final int NUM_GRID_COLUMNS = 3;
-
     private ProgressBar mProgressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
