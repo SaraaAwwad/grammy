@@ -34,10 +34,16 @@ public class MainActivity extends AppCompatActivity implements MainfeedListAdapt
 
     @Override
     public void onLoadMoreItems() {
-        HomeFragment fragment = (HomeFragment) getSupportFragmentManager()
-                .findFragmentByTag("android:switcher"+R.id.viewpager_container + ":" + mViewPager.getCurrentItem());
+        Log.d(TAG, "onLoadMoreItems");
+        HomeFragment fragment = (HomeFragment) getSupportFragmentManager().
+                findFragmentByTag("android:switcher:" + R.id.viewpager_container + ":" + mViewPager.getCurrentItem());
+
      if(fragment != null){
+         Log.d(TAG, "onLoadMoreItems: Not equal null");
          fragment.displayMorePhotos();
+     }else{
+         Log.d(TAG, "onLoadMoreItems: Fragment equals null");
+
      }
     }
 
@@ -59,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements MainfeedListAdapt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Log.d(TAG, "new fixing 16 yarab");
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager_container);
         mFrameLayout = (FrameLayout) findViewById(R.id.container);
@@ -96,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements MainfeedListAdapt
     }
 
     public void onCommentThreadSelected(Photo photo, String callingActivity){
-        Log.d(TAG, "onCommentThreadSelected: selected a coemment thread");
+        Log.d(TAG, "onCommentThreadSelected: selected a comment thread");
 
         ViewCommentsFragment fragment  = new ViewCommentsFragment();
         Bundle args = new Bundle();
@@ -133,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements MainfeedListAdapt
         if(mFrameLayout.getVisibility() == View.VISIBLE){
             showLayout();
         }
+
     }
 
 

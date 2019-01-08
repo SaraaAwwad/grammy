@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sara.grammy.Home.MainActivity;
 import com.example.sara.grammy.Profile.AccountSettingsActivity;
 import com.example.sara.grammy.Profile.ProfileActivity;
 import com.example.sara.grammy.R;
@@ -42,6 +43,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -259,7 +261,8 @@ public class ViewProfileFragment extends Fragment {
                     }
 
                 }
-
+                //Collections.sort(photos, Collections.reverseOrder());
+                Collections.reverse(photos);
                 setupImageGrid(photos);
             }
 
@@ -396,6 +399,7 @@ public class ViewProfileFragment extends Fragment {
         ArrayList<String> imgUrls = new ArrayList<String>();
         for(int i = 0; i<photos.size(); i++){
             imgUrls.add(photos.get(i).getImage_path());
+          //  imgUrls.add(0,photos.get(i).getImage_path());
         }
         GridImageAdapter adapter = new GridImageAdapter(getActivity(), R.layout.layout_grid_imageview,
                 "", imgUrls);
@@ -436,14 +440,9 @@ public class ViewProfileFragment extends Fragment {
 
     private void setProfileWidgets(UserSettings userSettings) {
 
-        //User user = userSettings.getUser();
         UserAccountSettings settings = userSettings.getSettings();
 
         UniversalImageLoader.setImage(settings.getProfile_photo(), mProfilePhoto, null, "");
-
-//        Glide.with(getActivity())
-//                .load(settings.getProfile_photo())
-//                .into(mProfilePhoto);
 
         mDisplayName.setText(settings.getDisplay_name());
         mUsername.setText(settings.getUsername());
@@ -458,14 +457,30 @@ public class ViewProfileFragment extends Fragment {
         mBackArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: nacigating back");
+                Log.d(TAG, "onClick: navigating back");
                 getActivity().getSupportFragmentManager().popBackStack();
                 getActivity().finish();
+
+////                if(getCallingActivityFromBundle().equals(getString(R.string.home_activity))){
+////                    getActivity().getSupportFragmentManager().popBackStack();
+//                    ((MainActivity)getActivity()).showLayout();
+//                }else{
+//                    getActivity().getSupportFragmentManager().popBackStack();
+//                }
             }
         });
     }
 
+    private String getCallingActivityFromBundle(){
+        Log.d(TAG, "getPhotoFromBundle: arguments: " + getArguments());
 
+        Bundle bundle = this.getArguments();
+        if(bundle != null) {
+            return bundle.getString(getString(R.string.home_activity));
+        }else{
+            return null;
+        }
+    }
 
 //    private void setupToolbar(){
 //

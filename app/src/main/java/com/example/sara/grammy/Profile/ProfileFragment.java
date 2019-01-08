@@ -41,16 +41,12 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-//import com.bumptech.glide.Glide;
-//import com.example.sara.grammy.models.Like;
-//import com.example.sara.grammy.models.Photo;
-//import com.example.sara.grammy.models.UserSettings;
 
 
 public class ProfileFragment extends Fragment {
@@ -194,6 +190,9 @@ public class ProfileFragment extends Fragment {
                         Log.e(TAG, "onDataChange: NullPointerException: " + e.getMessage() );
                     }
                 }
+              //  Collections.sort(photos, Collections.reverseOrder());
+                Collections.reverse(photos);
+              //  setupImageGrid(photos);
                 //setting up image grid
                 int gridWidth = getResources().getDisplayMetrics().widthPixels;
 
@@ -203,7 +202,7 @@ public class ProfileFragment extends Fragment {
                 ArrayList<String> imgUrls = new ArrayList<String>();
                 for(int i = 0; i<photos.size(); i++){
                     imgUrls.add(photos.get(i).getImage_path());
-                    //imgUrls.add(0,"");
+                //  imgUrls.add(0,photos.get(i).getImage_path());
                 }
 
                 GridImageAdapter adapter = new GridImageAdapter(getActivity(), R.layout.layout_grid_imageview,
@@ -305,18 +304,10 @@ public class ProfileFragment extends Fragment {
 
         UniversalImageLoader.setImage(settings.getProfile_photo(), mProfilePhoto, null, "");
 
-//        Glide.with(getActivity())
-//                .load(settings.getProfile_photo())
-//                .into(mProfilePhoto);
-
         mDisplayName.setText(settings.getDisplay_name());
         mUsername.setText(settings.getUsername());
         mWebsite.setText(settings.getWebsite());
         mDescription.setText(settings.getDescription());
-
-//        mPosts.setText(String.valueOf(settings.getPosts()));
-//        mFollowing.setText(String.valueOf(settings.getFollowing()));
-//        mFollowers.setText(String.valueOf(settings.getFollowers()));
 
         mProgressBar.setVisibility(View.GONE);
     }
@@ -374,9 +365,6 @@ public class ProfileFragment extends Fragment {
 
                 //retrieve user information from database
                 setProfileWidgets(mFirebaseMethods.getUserSettings(dataSnapshot));
-
-                //retrieve images for the user in question
-
             }
 
             @Override
@@ -391,7 +379,6 @@ public class ProfileFragment extends Fragment {
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
-        //mViewPager.setCurrentItem(HOME_FRAGMENT);
         FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 

@@ -42,11 +42,14 @@ import java.util.TimeZone;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.support.v4.view.PagerAdapter.POSITION_NONE;
+
 public class MainfeedListAdapter extends ArrayAdapter{
 
     public interface OnLoadMoreItemsListener{
         void onLoadMoreItems();
     }
+
 
     OnLoadMoreItemsListener mOnLoadMoreItemsListener;
 
@@ -104,16 +107,23 @@ public class MainfeedListAdapter extends ArrayAdapter{
             holder.caption = (TextView) convertView.findViewById(R.id.image_caption);
             holder.timeDetla = (TextView) convertView.findViewById(R.id.image_time_posted);
             holder.mprofileImage = (CircleImageView) convertView.findViewById(R.id.profile_photo);
-            holder.heart = new Heart(holder.heartWhite, holder.heartRed);
-            holder.photo = (Photo) getItem(position);
-            holder.detector = new GestureDetector(mContext, new GestureListener(holder));
-            holder.users = new StringBuilder();
 
+            //Log.d(TAG,"Photos: adapter: "+holder.photo.getPhoto_id());
             convertView.setTag(holder);
 
         }else{
             holder = (ViewHolder) convertView.getTag();
+            //Log.d(TAG,"Photos: adapter: view null: "+holder.photo.getPhoto_id());
+            //Log.d(TAG, "Photos holder in not null: "+ holder.caption );
+
         }
+        holder.photo = (Photo) getItem(position);
+        holder.detector = new GestureDetector(mContext, new GestureListener(holder));
+
+        holder.heart = new Heart(holder.heartWhite, holder.heartRed);
+
+        holder.users = new StringBuilder();
+        Log.d(TAG,"Photos: adapter: view null: "+holder.photo.getPhoto_id());
 
         //get the current users username (need for checking likes string)
         getCurrentUsername();
@@ -134,8 +144,6 @@ public class MainfeedListAdapter extends ArrayAdapter{
                 ((MainActivity)mContext).onCommentThreadSelected(((Photo)getItem(position)),
                         mContext.getString(R.string.home_activity));
 
-                //going to need to do something else?
-
                 ((MainActivity)mContext).hideLayout();
                 //when navigating to comment thread, hide the view pager layout
             }
@@ -144,7 +152,7 @@ public class MainfeedListAdapter extends ArrayAdapter{
         //set the time it was posted
         String timestampDifference = getTimestampDifference((Photo)getItem(position));
         if(!timestampDifference.equals("0")){
-            holder.timeDetla.setText(timestampDifference + " DAYS AGO");
+            holder.timeDetla.setText(timestampDifference + " DAY(S) AGO");
         }else{
             holder.timeDetla.setText("TODAY");
         }
@@ -160,6 +168,7 @@ public class MainfeedListAdapter extends ArrayAdapter{
                 .child(mContext.getString(R.string.dbname_user_account_settings))
                 .orderByChild(mContext.getString(R.string.field_user_id))
                 .equalTo(((Photo)getItem(position)).getUser_id());
+
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -209,8 +218,6 @@ public class MainfeedListAdapter extends ArrayAdapter{
                         public void onClick(View v) {
                             ((MainActivity)mContext).onCommentThreadSelected(((Photo)getItem(position)),
                                     mContext.getString(R.string.home_activity));
-
-                            //another thing?
                         }
                     });
                 }
@@ -248,6 +255,7 @@ public class MainfeedListAdapter extends ArrayAdapter{
         if(reachedEndOfList(position)){
             loadMoreData();
         }
+
         return convertView;
     }
 
@@ -316,6 +324,7 @@ public class MainfeedListAdapter extends ArrayAdapter{
                     .child(mContext.getString(R.string.dbname_photos))
                     .child(mHolder.photo.getPhoto_id())
                     .child(mContext.getString(R.string.field_likes));
+
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -393,18 +402,18 @@ public class MainfeedListAdapter extends ArrayAdapter{
         getLikesString(holder);
     }
 
-
-
     private void getLikesString(final ViewHolder holder){
-        Log.d(TAG, "getLikesString: getting likes string");
+        Log.d(TAG, "getLikesString: getting likes string for "+ holder.photo.getPhoto_id());
 
         try{
 
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
             Query query = reference
                     .child(mContext.getString(R.string.dbname_photos))
                     .child(holder.photo.getPhoto_id())
                     .child(mContext.getString(R.string.field_likes));
+
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -412,10 +421,12 @@ public class MainfeedListAdapter extends ArrayAdapter{
                     for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
 
                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
                         Query query = reference
                                 .child(mContext.getString(R.string.dbname_users))
                                 .orderByChild(mContext.getString(R.string.field_user_id))
                                 .equalTo(singleSnapshot.getValue(Like.class).getUser_id());
+
                         query.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -475,7 +486,7 @@ public class MainfeedListAdapter extends ArrayAdapter{
                     if(!dataSnapshot.exists()){
                         holder.likesString = "";
                         holder.likeByCurrentUser = false;
-                        //setup likes string
+
                         setupLikesString(holder, holder.likesString);
                     }
                 }

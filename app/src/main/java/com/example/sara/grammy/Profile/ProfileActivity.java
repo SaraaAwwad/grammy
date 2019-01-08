@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -95,14 +96,14 @@ public class ProfileActivity extends AppCompatActivity
 
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.container, fragment);
-                    transaction.addToBackStack(getString(R.string.view_profile_fragment));
+                //  transaction.addToBackStack(getString(R.string.view_profile_fragment));
                     transaction.commit();
                 }else{
                     Log.d(TAG, "init: inflating profile");
                     ProfileFragment fragment = new ProfileFragment();
                     android.support.v4.app.FragmentTransaction transaction = ProfileActivity.this.getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.container,fragment);
-                    transaction.addToBackStack(getString(R.string.profile_fragment));
+                    transaction.replace(R.id.container, fragment);
+                //    transaction.addToBackStack(getString(R.string.profile_fragment));
                     transaction.commit();
 
                 }
@@ -116,10 +117,16 @@ public class ProfileActivity extends AppCompatActivity
             ProfileFragment fragment = new ProfileFragment();
             android.support.v4.app.FragmentTransaction transaction = ProfileActivity.this.getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.container,fragment);
-            transaction.addToBackStack(getString(R.string.profile_fragment));
+            //transaction.addToBackStack(getString(R.string.profile_fragment));
             transaction.commit();
         }
         
+    }
+    public void onBackPressed() {
+        super.onBackPressed();
+
+//        Log.d(TAG, "onBackPressed from profile");
+//        this.finish();
     }
 
 

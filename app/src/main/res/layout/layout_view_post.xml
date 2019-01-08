@@ -101,6 +101,16 @@
                     android:visibility="visible"
                     android:layout_centerVertical="true"/>
 
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_delete"
+                    android:id="@+id/delete_photo"
+                    android:visibility="invisible"
+                    />
+
             </RelativeLayout>
 
             <RelativeLayout
