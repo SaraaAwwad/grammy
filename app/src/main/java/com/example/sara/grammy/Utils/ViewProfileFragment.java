@@ -149,7 +149,12 @@ public class ViewProfileFragment extends Fragment {
                         .child(getString(R.string.field_user_id))
                         .setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
+                String f = (String) mFollowers.getText();
+                int fc = Integer.parseInt(f) + 1 ;
+                mFollowers.setText(String.valueOf(fc));
+
                 setFollowing();
+
             }
         });
 
@@ -170,6 +175,10 @@ public class ViewProfileFragment extends Fragment {
                         .child(mUser.getUser_id())
                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                         .removeValue();
+
+                String f = (String) mFollowers.getText();
+                int fc = Integer.parseInt(f) - 1 ;
+                mFollowers.setText(String.valueOf(fc));
 
                 setUnfollowing();
 
@@ -371,6 +380,7 @@ public class ViewProfileFragment extends Fragment {
 
     private void setFollowing(){
         Log.d(TAG, "setFollowing: updating UI for following this user");
+
         mFollow.setVisibility(View.GONE);
         mUnfollow.setVisibility(View.VISIBLE);
         editProfile.setVisibility(View.GONE);

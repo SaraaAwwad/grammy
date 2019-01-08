@@ -149,11 +149,6 @@ public class ViewPostFragment extends Fragment {
 
                         StorageReference mStorageReference = FirebaseStorage.getInstance().getReference().child(path);
 
-
-
-                        //StorageReference photoRef = FirebaseStorage.getInstance().
-                         //       getReferenceFromUrl(path);
-
                         mStorageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -256,7 +251,6 @@ public class ViewPostFragment extends Fragment {
             Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
         }
     }
-
 
     private void getLikesString(){
         Log.d(TAG, "getLikesString: getting likes string");
@@ -485,8 +479,6 @@ public class ViewPostFragment extends Fragment {
             }
         });
     }
-
-
 
     private void setupWidgets(){
         String timestampDiff = getTimestampDifference();
