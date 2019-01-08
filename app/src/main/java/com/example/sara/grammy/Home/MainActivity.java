@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements MainfeedListAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d(TAG, "new fixing 16 yarab");
+        Log.d(TAG, "new fixing reg yarab");
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager_container);
         mFrameLayout = (FrameLayout) findViewById(R.id.container);
