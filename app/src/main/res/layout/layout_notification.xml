@@ -50,20 +50,16 @@
                 android:layout_toRightOf="@+id/likes_notify_username"
                 android:id="@+id/likes_notify"/>
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3 d"
-                android:textColor="@color/grey"
-                android:textSize="14sp"
-                android:id="@+id/likes_notify_time_posted"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_below="@+id/likes_notify"/>
-
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_grammy"
+                android:id="@+id/image_liked"
+                />
 
         </RelativeLayout>
+
 
     </RelativeLayout>
 

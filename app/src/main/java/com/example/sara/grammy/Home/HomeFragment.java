@@ -19,7 +19,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.snapshot.Index;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HomeFragment extends android.support.v4.app.Fragment{
-
 
 
     private static final String TAG = "HomeFragment";

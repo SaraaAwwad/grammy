@@ -20,6 +20,11 @@ public class LikesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
 
+        LikesFragment fragment = new LikesFragment();
+        android.support.v4.app.FragmentTransaction transaction = LikesActivity.this.getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container,fragment);
+        transaction.addToBackStack(getString(R.string.notification_fragment));
+        transaction.commit();
 
         Log.d(TAG, "onCreate:Started");;
 

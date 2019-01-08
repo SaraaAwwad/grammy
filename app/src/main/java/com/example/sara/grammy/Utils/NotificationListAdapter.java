@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sara.grammy.R;
 import com.example.sara.grammy.models.Notification;
+import com.example.sara.grammy.models.Photo;
 import com.example.sara.grammy.models.UserAccountSettings;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -42,8 +45,9 @@ public class NotificationListAdapter extends ArrayAdapter<Notification> {
     }
 
     private static class ViewHolder{
-        TextView username, timestamp;
+        TextView username;
         CircleImageView profileImage;
+        ImageView image_liked;
     }
 
     @NonNull
@@ -57,8 +61,8 @@ public class NotificationListAdapter extends ArrayAdapter<Notification> {
             holder = new NotificationListAdapter.ViewHolder();
 
             holder.username = convertView.findViewById(R.id.likes_notify_username);
-            holder.timestamp = convertView.findViewById(R.id.likes_notify_time_posted);
             holder.profileImage = convertView.findViewById(R.id.likes_notify_image);
+            holder.image_liked = convertView.findViewById(R.id.image_liked);
 
             convertView.setTag(holder);
         }else{
@@ -86,6 +90,10 @@ public class NotificationListAdapter extends ArrayAdapter<Notification> {
                     holder.username.setText(
                             singleSnapshot.getValue(UserAccountSettings.class).getUsername());
 
+                    ImageLoader imageLoader = ImageLoader.getInstance();
+                    imageLoader.displayImage(
+                            singleSnapshot.getValue(UserAccountSettings.class).getProfile_photo(),
+                            holder.profileImage);
                 }
 
             }
@@ -95,6 +103,30 @@ public class NotificationListAdapter extends ArrayAdapter<Notification> {
                 Log.d(TAG, "onCancelled: query cancelled.");
             }
         });
+
+        DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference();
+        Query query2 = reference2
+                .child(mContext.getString(R.string.dbname_photos))
+                .orderByChild(mContext.getString(R.string.field_photo_id))
+                .equalTo(getItem(position).getPhoto_id());
+        query2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for ( DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
+
+                    ImageLoader imageLoader = ImageLoader.getInstance();
+                    imageLoader.displayImage(
+                            singleSnapshot.getValue(Photo.class).getImage_path(),
+                            holder.image_liked);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: query cancelled.");
+            }
+        });
+
 
 
         return convertView;
