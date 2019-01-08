@@ -151,8 +151,8 @@ public class NextActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                imageCount = mFirebaseMethods.getImageCount(dataSnapshot);
-                Log.d(TAG, "onDataChange: Image Count = "+imageCount);
+              //  imageCount = mFirebaseMethods.getImageCount(dataSnapshot);
+             //   Log.d(TAG, "onDataChange: Image Count = "+imageCount);
             }
 
             @Override
