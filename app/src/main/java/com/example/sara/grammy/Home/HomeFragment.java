@@ -74,7 +74,6 @@ public class HomeFragment extends android.support.v4.app.Fragment{
 
                 mFollowing.add(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-
                 //get the photos
                 getPhotos();
             }

@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import com.example.sara.grammy.Utils.BottomNavigationViewHelper;
 import com.example.sara.grammy.Utils.FirebaseMethods;
 import com.example.sara.grammy.Utils.GridImageAdapter;
 import com.example.sara.grammy.Utils.UniversalImageLoader;
+import com.example.sara.grammy.Utils.ViewFollowersFragment;
 import com.example.sara.grammy.models.Comment;
 import com.example.sara.grammy.models.Like;
 import com.example.sara.grammy.models.Photo;
@@ -128,6 +130,49 @@ public class ProfileFragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
+
+        mFollowing.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+
+                Log.d(TAG, "init: inflating viewfollowers");
+
+                ViewFollowersFragment fragment = new ViewFollowersFragment();
+                Bundle args = new Bundle();
+                args.putString(getString(R.string.intent_user), FirebaseAuth.getInstance().getCurrentUser().getUid());
+                args.putString(getString(R.string.dbname_following), R.string.dbname_following+"");
+                fragment.setArguments(args);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, fragment);
+                transaction.addToBackStack(getString(R.string.view_profile_fragment));
+                transaction.commit();
+                //R.layout.fragment_view_profile
+            }
+        });
+
+        mFollowers.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+
+                Log.d(TAG, "init: inflating viewfollowers");
+
+                ViewFollowersFragment fragment = new ViewFollowersFragment();
+                Bundle args = new Bundle();
+                args.putString(getString(R.string.intent_user),FirebaseAuth.getInstance().getCurrentUser().getUid() );
+                args.putString(getString(R.string.dbname_followers), R.string.dbname_followers+"");
+
+                fragment.setArguments(args);
+
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, fragment);
+                transaction.addToBackStack(getString(R.string.view_profile_fragment));
+                transaction.commit();
+                //R.layout.fragment_view_profile
+            }
+        });
+
 
         return view;
     }
