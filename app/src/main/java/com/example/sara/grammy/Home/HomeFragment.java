@@ -168,8 +168,8 @@ public class HomeFragment extends android.support.v4.app.Fragment{
 
                 Log.d(TAG, "Photos: "+mPaginatedPhotos);
                 mAdapter = new MainfeedListAdapter(getActivity(), R.layout.layout_mainfeed_listitem, mPaginatedPhotos);
+//                mAdapter.notifyDataSetChanged();
                 mListView.setAdapter(mAdapter);
-                mAdapter.notifyDataSetChanged();
 
             }catch(NullPointerException e){
                 Log.e(TAG, "displayPhotos: NullPointerException" + e.getMessage());
