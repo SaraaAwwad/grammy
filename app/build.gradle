@@ -40,6 +40,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:+'
 
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.facebook.android:facebook-share:[4,5)'
 
     //Universal Image Loader
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'

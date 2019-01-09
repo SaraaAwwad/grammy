@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,6 +19,8 @@
         android:hardwareAccelerated="false"
         android:largeHeap="true">
 
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
         <activity android:name=".Home.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,6 +45,10 @@
         <activity android:name=".Profile.AccountSettingsActivity"/>
         <activity android:name=".Share.NextActivity"/>
 
+        <provider
+            android:authorities="com.facebook.app.FacebookContentProvider387723795368120"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
 </application>
 
 </manifest>

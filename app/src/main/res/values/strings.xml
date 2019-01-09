@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Grammy</string>
     <string name="edit_profile_fragment">Edit Profile</string>
+    <string name="share__profile_fragment">Share Profile</string>
     <string name="view_post_fragment">View Post</string>
     <string name="sign_out_fragment">Sign Out</string>
     <string name="profile_fragment">Profile</string>
@@ -9,6 +10,8 @@
     <string name="view_profile_fragment">ViewProfile</string>
     <string name="view_comments_fragment">View Comments</string>
 
+    <string name="facebook_app_id">387723795368120</string>
+    <string name="facebook_login_protocol_scheme">fb387723795368120</string>
     <!-- Descriptions -->
     <string name="comments_descr">commented on your picture.</string>
     <string name="likes_descr">liked your comment.</string>
