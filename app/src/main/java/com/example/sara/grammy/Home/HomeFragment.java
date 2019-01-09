@@ -48,6 +48,7 @@ public class HomeFragment extends android.support.v4.app.Fragment{
         mFollowing = new ArrayList<>();
         mPhotos = new ArrayList<>();
 
+        Log.d(TAG, "test: MainfeedCalled");
         getFollowing();
 
         return view;
@@ -168,7 +169,7 @@ public class HomeFragment extends android.support.v4.app.Fragment{
                 Log.d(TAG, "Photos: "+mPaginatedPhotos);
                 mAdapter = new MainfeedListAdapter(getActivity(), R.layout.layout_mainfeed_listitem, mPaginatedPhotos);
                 mListView.setAdapter(mAdapter);
-               // mAdapter.notifyDataSetChanged();
+                mAdapter.notifyDataSetChanged();
 
             }catch(NullPointerException e){
                 Log.e(TAG, "displayPhotos: NullPointerException" + e.getMessage());

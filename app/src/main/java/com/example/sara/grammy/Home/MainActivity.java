@@ -2,7 +2,9 @@ package com.example.sara.grammy.Home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -32,6 +34,9 @@ import com.example.sara.grammy.models.UserAccountSettings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class MainActivity extends AppCompatActivity implements MainfeedListAdapter.OnLoadMoreItemsListener{
 
@@ -79,8 +84,27 @@ public class MainActivity extends AppCompatActivity implements MainfeedListAdapt
         initImageLoader();
         setUpBottomNav();
         setupViewPager();
+        printKeyhash();
     }
 
+    private void printKeyhash(){
+        try{
+            PackageInfo info = getPackageManager().getPackageInfo("com.example.sara.grammy",PackageManager.GET_SIGNATURES);
+            for(Signature signature: info.signatures){
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash", android.util.Base64.encodeToString(md.digest(), android.util.Base64.DEFAULT));
+
+            }
+
+
+        }catch(PackageManager.NameNotFoundException e){
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+    }
     public int getCurrentTabNumber(){
         return  mViewPager.getCurrentItem();
     }
