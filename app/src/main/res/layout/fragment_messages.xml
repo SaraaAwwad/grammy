@@ -6,10 +6,25 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Messages Fragment"
+        android:text="Sharing"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:textSize="20sp"
-        />
+        android:fontFamily="@font/grandhotelregular"
+        android:textSize="50sp" />
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_marginLeft="60dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:background="@color/link_blue"
+        android:id="@+id/share_button"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Website on Facebook" />
+
+
 
 </RelativeLayout>

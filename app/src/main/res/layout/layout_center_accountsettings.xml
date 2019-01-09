@@ -29,17 +29,6 @@
 
         </ListView>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:background="@color/link_blue"
-            android:id="@+id/share_button"
-            android:layout_alignParentBottom="true"
-            android:text="Share on Facebook"
-
-            />
 
     </RelativeLayout>
 

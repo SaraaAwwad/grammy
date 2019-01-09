@@ -3,7 +3,6 @@ package com.example.sara.grammy.Profile;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,16 +25,11 @@ import com.example.sara.grammy.Utils.BottomNavigationViewHelper;
 import com.example.sara.grammy.Utils.FirebaseMethods;
 import com.example.sara.grammy.Utils.SectionsStatePagerAdapter;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookSdk;
-import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -65,52 +59,52 @@ public class AccountSettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(this.getApplicationContext());
+        //FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_accountsettings);
         mContext = AccountSettingsActivity.this;
         mViewPager = findViewById(R.id.viewpager_container);
         mRelativeLayout = findViewById(R.id.relLayout1);
-        shareButton = findViewById(R.id.share_button);
+        //shareButton = findViewById(R.id.share_button);
 
         //setProfileImage();
         setupFirebaseAuth();
 
         //Init Facebook
-        callbackManager = CallbackManager.Factory.create();
-        shareDialog = new ShareDialog(this);
-
-
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                try {
-                    DatabaseReference user_Ref = myRef.child(mContext.getString(R.string.dbname_user_account_settings)).child(mAuth.getCurrentUser().getUid());
-                    user_Ref.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            website_user = dataSnapshot.child("website").getValue().toString();
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
-                    ShareLinkContent linkContent = new ShareLinkContent.Builder()
-                            .setQuote("My Website Link:")
-                            .setContentUrl(Uri.parse(website_user)).build();
-                    if (ShareDialog.canShow(ShareLinkContent.class)) {
-                        shareDialog.show(linkContent);
-
-                    }
-
-                } catch (Exception e) {
-                    Log.d("Exception: ", e.getMessage());
-                }
-            }
-        });
+//        callbackManager = CallbackManager.Factory.create();
+//        shareDialog = new ShareDialog(this);
+//
+//
+//        shareButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                try {
+//                    DatabaseReference user_Ref = myRef.child(mContext.getString(R.string.dbname_user_account_settings)).child(mAuth.getCurrentUser().getUid());
+//                    user_Ref.addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                            website_user = dataSnapshot.child("website").getValue().toString();
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//
+//                    ShareLinkContent linkContent = new ShareLinkContent.Builder()
+//                            .setQuote("My Website Link:")
+//                            .setContentUrl(Uri.parse(website_user)).build();
+//                    if (ShareDialog.canShow(ShareLinkContent.class)) {
+//                        shareDialog.show(linkContent);
+//
+//                    }
+//
+//                } catch (Exception e) {
+//                    Log.d("Exception: ", e.getMessage());
+//                }
+//            }
+//        });
 
 
         setupSettingsList();
