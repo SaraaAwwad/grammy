@@ -216,8 +216,12 @@ public class MainfeedListAdapter extends ArrayAdapter{
                     holder.comment.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            Log.d(TAG, "onClick: loading comment thread for " + ((Photo)getItem(position)).getPhoto_id());
                             ((MainActivity)mContext).onCommentThreadSelected(((Photo)getItem(position)),
                                     mContext.getString(R.string.home_activity));
+
+                            ((MainActivity)mContext).hideLayout();
+
                         }
                     });
                 }
